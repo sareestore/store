@@ -16,15 +16,18 @@
 
     <table>
         <tr>
-            <td><label for="product_type">Type</label></td>
-            <td><select name="product_type" id="product_type"></select></td>
+            <td><label for="product_types">Types</label></td>
+            <td><select name="product_types" id="product_types" data-placeholder="Add product_types..."
+                        class="chosen-select"
+                        multiple style="width:200px"></select></td>
             <td><input type="text" id="new_product_type">
                 <button id="add_new_product_type_button" onclick="addNewProductType()">Add New Product Type</button>
             </td>
         </tr>
         <tr>
-            <td><label for="occasion">Occasion</label></td>
-            <td><select name="occasion" id="occasion"></select></td>
+            <td><label for="occasions">Occasions</label></td>
+            <td><select name="occasions" id="occasions" data-placeholder="Add Occasions..." class="chosen-select"
+                        multiple style="width:200px"></select></td>
             <td><input type="text" id="new_occasion">
                 <button id="add_new_occasion_button" onclick="addNewOccasion()">Add New Occasion</button>
             </td>
@@ -41,9 +44,15 @@
                 <button id="add_new_color_button" onclick="addNewColor()">Add New Color</button>
             </td>
         </tr>
+
         <tr>
             <td><label for="size">Size</label></td>
             <td><input type="text" id="size"></td>
+        </tr>
+
+        <tr>
+            <td><label for="description">Description</label></td>
+            <td><input type="text" id="description"></td>
         </tr>
 
         <tr>
@@ -56,10 +65,10 @@
         </tr>
 
         <tr>
-            <td><label for="product_images">Image File</label></td>
+            <td><label for="product_images">Images</label></td>
             <td>
                 <article>
-                    <input type="file" onchange="previewFile()" id="product_images" multiple><br>
+                    <input type="file" id="product_images" multiple><br>
                     <output id="product_images_preview"/>
                 </article>
             </td>

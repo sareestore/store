@@ -5,56 +5,40 @@ document.onreadystatechange = function () {
 
     } else if (document.readyState == "complete") {
         populateColors(document.getElementById("colors"));
-        populateOccasions(document.getElementById("occasion"));
+        populateOccasions(document.getElementById("occasions"));
         populateTags(document.getElementById("tags"));
-        populateTypes(document.getElementById("product_type"));
+        populateTypes(document.getElementById("product_types"));
         $(".chosen-select").chosen({enable_split_word_search: true, search_contains: true});
         enableImageRead();
     }
 };
 
-enableImageRead = function(){
+enableImageRead = function () {
     //Check File API support
-    if(window.File && window.FileList && window.FileReader)
-    {
+    if (window.File && window.FileList && window.FileReader) {
         var filesInput = document.getElementById("product_images");
-
-        filesInput.addEventListener("change", function(event){
-
+        filesInput.addEventListener("change", function (event) {
             var files = event.target.files; //FileList object
             var output = document.getElementById("product_images_preview");
-
-            for(var i = 0; i< files.length; i++)
-            {
+            for (var i = 0; i < files.length; i++) {
                 var file = files[i];
-
                 //Only pics
-                if(!file.type.match('image'))
+                if (!file.type.match('image'))
                     continue;
-
                 var picReader = new FileReader();
-
-                picReader.addEventListener("load",function(event){
-
+                picReader.addEventListener("load", function (event) {
                     var picFile = event.target;
-
                     var div = document.createElement("div");
-
                     div.innerHTML = "<img class='thumbnail' src='" + picFile.result + "'" +
                         "title='" + picFile.name + "'/>";
-
-                    output.insertBefore(div,null);
-
+                    output.insertBefore(div, null);
                 });
-
                 //Read the image
                 picReader.readAsDataURL(file);
             }
-
         });
     }
-    else
-    {
+    else {
         console.log("Your browser does not support File API");
     }
 };
@@ -81,13 +65,18 @@ function fillProductTypesSelect(sel, options) {
     if (options.constructor !== Array) {
         return;
     }
-    sel.options.length = 0;
+    var selectedVals = $(sel).val();
+    $(sel).empty();
+    $(sel).trigger("chosen:updated");
     for (var i = 0; i < options.length; i++) {
-        var opt = document.createElement('option');
-        opt.innerHTML = options[i].type;
-        opt.value = options[i].id;
-        sel.appendChild(opt);
+        $(sel).append($("<option/>", {
+            value: options[i].id,
+            text: options[i].type
+        }));
     }
+    //change selected entities by the following statement
+    $(sel).val(selectedVals).trigger("chosen:updated");
+    $(sel).trigger("chosen:updated");
 }
 
 function populateOccasions(element) {
@@ -112,13 +101,18 @@ function fillOccasionsSelect(sel, options) {
     if (options.constructor !== Array) {
         return;
     }
-    sel.options.length = 0;
+    var selectedVals = $(sel).val();
+    $(sel).empty();
+    $(sel).trigger("chosen:updated");
     for (var i = 0; i < options.length; i++) {
-        var opt = document.createElement('option');
-        opt.innerHTML = options[i].occasion;
-        opt.value = options[i].id;
-        sel.appendChild(opt);
+        $(sel).append($("<option/>", {
+            value: options[i].id,
+            text: options[i].occasion
+        }));
     }
+    //change selected entities by the following statement
+    $(sel).val(selectedVals).trigger("chosen:updated");
+    $(sel).trigger("chosen:updated");
 }
 
 function populateColors(element) {
@@ -213,7 +207,7 @@ function addNewProductType() {
                 return;
             }
             document.getElementById("new_product_type").value = "";
-            populateTypes(document.getElementById("product_type"));
+            populateTypes(document.getElementById("product_types"));
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(textStatus, errorThrown);
@@ -243,7 +237,7 @@ function addNewOccasion() {
                 return;
             }
             document.getElementById("new_occasion").value = "";
-            populateOccasions(document.getElementById("occasion"));
+            populateOccasions(document.getElementById("occasions"));
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(textStatus, errorThrown);
@@ -335,4 +329,35 @@ function manipulateTagsSelect() {
             select.trigger("chosen:updated");
         }
     });
+}
+
+function createProduct() {
+    var product_type_ids = $(document.getElementById("product_types")).val();
+    var occasion_ids = $(document.getElementById("occasions")).val();
+    var price = document.getElementById("price").value;
+    var color_ids = $(document.getElementById("colors")).val();
+    var size = document.getElementById("size").value;
+    var description = document.getElementById("description").value;
+    var tag_ids = $(document.getElementById("tags")).val();
+    var imageFiles = [];
+    var files = document.getElementById("product_images").files;
+    for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        //Only pics
+        if (!file.type.match('image')) {
+            continue;
+        }
+        imageFiles.push(file);
+    }
+    var data = {
+        product_type_ids: product_type_ids,
+        occasion_ids: occasion_ids,
+        price: price,
+        color_ids: color_ids,
+        size: size,
+        description: description,
+        tag_ids: tag_ids,
+        imageFiles: imageFiles
+    };
+    console.log(data);
 }
