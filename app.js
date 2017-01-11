@@ -48,6 +48,11 @@ app.use(favicon(__dirname + '/project/public/img/favicon.ico'));
 app.use('/', require('./project/controllers/auth'));
 
 app.use('/', require('./project/controllers/general'));
+app.use('/products/', require('./project/controllers/product'));
+app.use('/api/product_types/', require('./project/controllers/product_type'));
+app.use('/api/colors/', require('./project/controllers/color'));
+app.use('/api/occasions/', require('./project/controllers/occasion'));
+app.use('/api/tags/', require('./project/controllers/tag'));
 app.use('/test/usertest', require('./project/controllers/testing'));
 
 

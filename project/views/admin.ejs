@@ -5,25 +5,77 @@
     <link rel="stylesheet" type="text/css" href="libs/css/roboto.css">
     <link rel="stylesheet" type="text/css" href="libs/css/arrow-icons.css">
     <link rel="stylesheet" type="text/css" href="libs/css/toastr.min.css">
-    <link rel="stylesheet" type="text/css" href="./home.css">
+    <link rel="stylesheet" type="text/css" href="./admin.css">
 </head>
 <body>
 <div class="wrapper">
     <% include ./partials/header %>
-    <h1>Inject Solar Dashboard</h1>
-    <% if (user != null && user.is_verified == 0) { %>
-    <h2>Dear <%= user.username %>, please verify your email id by clicking the verification link sent to your email</h2>
-    <h3>To resend the verification email, please click <a href="verify?userid=<%= user.id %>">here</a></h3>
-    <% } %>
+    <h1>Admin Dashboard</h1>
+
+    <h2>New Product Upload</h2>
+
+    <table>
+        <tr>
+            <td><label for="product_type">Type</label></td>
+            <td><select name="product_type" id="product_type"></select></td>
+            <td><input type="text" id="new_product_type">
+                <button id="add_new_product_type_button" onclick="addNewProductType()">Add New Product Type</button>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="occasion">Occasion</label></td>
+            <td><select name="occasion" id="occasion"></select></td>
+            <td><input type="text" id="new_occasion">
+                <button id="add_new_occasion_button" onclick="addNewOccasion()">Add New Occasion</button>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="price">Price</label></td>
+            <td><input type="number" id="price"></td>
+        </tr>
+        <tr>
+            <td><label for="colors">Colors</label></td>
+            <td><select name="colors" id="colors" data-placeholder="Add Colors..." class="chosen-select"
+                        multiple style="width:200px"></select></td>
+            <td><input type="text" id="new_color">
+                <button id="add_new_color_button" onclick="addNewColor()">Add New Color</button>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="size">Size</label></td>
+            <td><input type="text" id="size"></td>
+        </tr>
+
+        <tr>
+            <td><label for="tags">Tags</label></td>
+            <td><select name="tags" id="tags" data-placeholder="Add Tags..." class="chosen-select"
+                        multiple style="width:200px"></select></td>
+            <td><input type="text" id="new_tag">
+                <button id="add_new_tag_button" onclick="addNewTag()">Add New Tag</button>
+            </td>
+        </tr>
+
+        <tr>
+            <td><label for="product_images">Image File</label></td>
+            <td>
+                <article>
+                    <input type="file" onchange="previewFile()" id="product_images" multiple><br>
+                    <output id="product_images_preview"/>
+                </article>
+            </td>
+        </tr>
+
+    </table>
+    <button id="create_product_button" onclick="createProduct()">Submit</button>
+
     <div class="push"></div>
 </div>
 
 <% include ./partials/footer %>
-<script src="libs/js/angular.min.js"></script>
-<script src="libs/js/dirPagination.js"></script>
 <script src="libs/js/jquery.min.js"></script>
-<script src="libs/js/dateStringHelper.js"></script>
 <script src="libs/js/toastr.min.js"></script>
-<script src="home.js"></script>
+<link rel="stylesheet" type="text/css" href="libs/js/chosen.min.css">
+<script src="libs/js/chosen.jquery.min.js"></script>
+<script src="admin.js"></script>
 </body>
 </html>
