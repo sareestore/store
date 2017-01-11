@@ -1,8 +1,8 @@
 var mysql = require('mysql')
     , async = require('async');
 
-var PRODUCTION_DB = 'isview'
-    , TEST_DB = 'isview';
+var PRODUCTION_DB = 'saree_store_db'
+    , TEST_DB = 'saree_store_db';
 
 exports.MODE_TEST = 'mode_test';
 exports.MODE_PRODUCTION = 'mode_production';

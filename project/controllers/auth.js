@@ -24,11 +24,24 @@ router.post('/login', passport.authenticate('local-login', {
     failureFlash: true
 }));
 
-router.post('/signup', passport.authenticate('local-signup', {
-    successRedirect: '/signupemailsent',
-    failureRedirect: '/login',
-    failureFlash: true
-}));
+/*
+ router.post('/signup', passport.authenticate('local-signup', {
+ successRedirect: '/signupemailsent',
+ failureRedirect: '/login',
+ failureFlash: true
+ }));
+ */
+router.post('/signup', function (req, res, next) {
+    passport.authenticate('local-signup', function (err, user, info) {
+        if (err) {
+            return next(err);
+        }
+        if (!user) {
+            return res.redirect('/login');
+        }
+        return res.redirect('/home');
+    })(req, res, next);
+});
 
 router.post('/*', isLoggedIn, function (req, res, next) {
     //console.log('caught a post request');
@@ -42,6 +55,7 @@ router.put('/*', isLoggedIn, function (req, res, next) {
 
 function isLoggedIn(req, res, next) {
     //console.log("reached isLoggedIn...");
+    if (req.url === '/forgot' || req.url == "/resetpassword") return next();
     if (req.isAuthenticated()) {
         return next();
     }

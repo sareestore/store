@@ -48,8 +48,6 @@ app.use(favicon(__dirname + '/project/public/img/favicon.ico'));
 app.use('/', require('./project/controllers/auth'));
 
 app.use('/', require('./project/controllers/general'));
-app.use('/api/applications', require('./project/controllers/application'));
-app.use('/api/approvals', require('./project/controllers/approval'));
 app.use('/test/usertest', require('./project/controllers/testing'));
 
 
@@ -88,7 +86,7 @@ app.use(function (err, req, res, next) {
 // Connect to MySQL on start
 db.connect(db.MODE_PRODUCTION, function (err) {
     if (err) {
-        console.log('Unable to connect to the NHPTL Database.');
+        console.log('Unable to connect to the Database.');
         process.exit(1);
     } else {
         app.listen(port, function () {

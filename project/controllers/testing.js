@@ -1,8 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var Application = require('../models/application.js');
-var Approval = require('../models/approval.js');
-var Email_Token = require('../models/email_token.js');
 var User = require('../models/User_Mysql');
 
 var nodemailer = require('nodemailer');

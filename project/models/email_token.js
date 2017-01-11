@@ -25,7 +25,6 @@ exports.create = function (username, done) {
             for (var i = 0; i < insertColumns.length; i++) {
                 sql.set(insertColumns[i], "?", {dontQuote: true});
             }
-            sql.set(tableColumns[3], "DATE_ADD(NOW(), INTERVAL 24 HOUR)", {dontQuote: true});
             db.get().query(sql.toString(), values, function (err, result) {
                 if (err) return done(err);
                 //console.log("created user with name " + user_id + " with ID " + result.insertId);
@@ -57,21 +56,4 @@ exports.getByToken = function (token, done) {
         if (err) return done(err);
         done(null, rows);
     });
-};
-
-exports.getAll = function (done) {
-    db.get().query(SQLHelper.createSQLGetString('users', ['username', 'password'], [], []), function (err, rows) {
-        if (err) return done(err);
-        done(null, rows);
-    })
-};
-
-
-exports.delete = function (token, done) {
-    var values = [token];
-    db.get().query('DELETE FROM users WHERE username = ?', values, function (err, result) {
-        if (err) return done(err);
-        //console.log("Number of rows deleted is " + result.affectedRows);
-        done(null, result);
-    })
 };

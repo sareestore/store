@@ -44,7 +44,7 @@
                 <% if (message.length > 0) { %>
                 <p style="color: red"><%= message %></p>
                 <% } %>
-                <p class="forgot"><a href="frgtpass.html">Forgot Password?</a></p>
+                <p class="forgot"><a href="./frgtpass">Forgot Password?</a></p>
 
                 <button class="button button-block"/>
                 Log In</button>
@@ -55,23 +55,8 @@
         <div id="signup">
             <h1>Sign Up for iSview</h1>
 
-            <form action="/signup" method="post">
+            <form action="/signup" method="post" onsubmit="return matchPasswords()">
 
-                <div class="top-row">
-                    <div class="field-wrap">
-                        <label>
-                            First Name<span class="req">*</span>
-                        </label>
-                        <input type="text" required autocomplete="off" name="fname"/>
-                    </div>
-
-                    <div class="field-wrap">
-                        <label>
-                            Last Name<span class="req">*</span>
-                        </label>
-                        <input type="text" required autocomplete="off" name="lname"/>
-                    </div>
-                </div>
                 <div class="field-wrap">
                     <label>
                         Select Username<span class="req">*</span>
@@ -89,20 +74,36 @@
                     <label>
                         Set A Password<span class="req">*</span>
                     </label>
-                    <input type="password" required autocomplete="off" name="password"/>
+                    <input type="password" required autocomplete="off" name="password" id="password"/>
                 </div>
+
+                <div class="field-wrap">
+                    <label>
+                        Confirm Password<span class="req">*</span>
+                    </label>
+                    <input type="password" required autocomplete="off" name="confirmpassword" id="confirmpassword"/>
+                </div>
+
+                <div class="field-wrap">
+                    <label>
+                        Full Name<span class="req">*</span>
+                    </label>
+                    <input type="text" autocomplete="off" name="full_name"/>
+                </div>
+
                 <div class="field-wrap">
                     <label>
                         Contact Number<span class="req">*</span>
                     </label>
-                    <input type="tel" required autocomplete="off" name="phone"/>
+                    <input type="tel" autocomplete="off" name="phone"/>
                 </div>
                 <div class="field-wrap">
                     <label>
                         Contact Address<span class="req">*</span>
                     </label>
-                    <input type="address" required autocomplete="off" name="address"/>
+                    <input type="address" autocomplete="off" name="address"/>
                 </div>
+                <p style="color: red" id="passwordAlert"></p>
                 <button type="submit" class="button button-block"/>
                 Get Started</button>
 
@@ -119,6 +120,22 @@
 <script src='./libs/js/jquery.min.js'></script>
 
 <script src="js/login.js"></script>
-
+<script>
+    function matchPasswords() {
+        var pass1 = document.getElementById("password").value;
+        var pass2 = document.getElementById("confirmpassword").value;
+        var ok = true;
+        if (pass1 != pass2) {
+            document.getElementById("passwordAlert").innerHTML = "Passwords Do not match";
+            document.getElementById("password").style.borderColor = "#E34234";
+            document.getElementById("confirmpassword").style.borderColor = "#E34234";
+            ok = false;
+        }
+        else {
+            //alert("Passwords Match!!!");
+        }
+        return ok;
+    }
+</script>
 </body>
 </html>
