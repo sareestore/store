@@ -332,6 +332,8 @@ function manipulateTagsSelect() {
 }
 
 function createProduct() {
+    document.getElementById("product_types_chosen").style.border = '';
+    document.getElementById("product_images").style.border = '';
     var product_type_ids = $(document.getElementById("product_types")).val();
     var occasion_ids = $(document.getElementById("occasions")).val();
     var price = document.getElementById("price").value;
@@ -341,6 +343,23 @@ function createProduct() {
     var tag_ids = $(document.getElementById("tags")).val();
     var imageFiles = [];
     var files = document.getElementById("product_images").files;
+    var warning_messages = [];
+    // there should be at least one product type
+    if (product_type_ids == null || product_type_ids.length <= 0) {
+        document.getElementById("product_types_chosen").style.border = '1px solid #f00';
+        warning_messages.push("There should be at least 1 product type");
+    }
+    // there should be at least one image file
+    if (files.length <= 0) {
+        document.getElementById("product_images").style.border = '1px solid #f00';
+        warning_messages.push("There should be at least 1 image");
+    }
+    if (warning_messages.length > 0) {
+        document.getElementById("message_crumb").innerHTML = "" + warning_messages.join("  |  ");
+        return;
+    }
+    var data = new FormData(document.getElementById("product_form"));
+
     for (var i = 0; i < files.length; i++) {
         var file = files[i];
         //Only pics
@@ -349,15 +368,36 @@ function createProduct() {
         }
         imageFiles.push(file);
     }
-    var data = {
-        product_type_ids: product_type_ids,
-        occasion_ids: occasion_ids,
-        price: price,
-        color_ids: color_ids,
-        size: size,
-        description: description,
-        tag_ids: tag_ids,
-        imageFiles: imageFiles
-    };
+    /*
+     var data = {
+     product_type_ids: product_type_ids,
+     occasion_ids: occasion_ids,
+     price: price,
+     color_ids: color_ids,
+     size: size,
+     description: description,
+     tag_ids: tag_ids,
+     imageFiles: imageFiles
+     };
+     */
+
     console.log(data);
+
+
+    $.ajax({
+        //fetch categories from sever
+        url: base_url + "/api/products/",
+        type: "POST",
+        data: data,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            //toastr["info"]("Categories fetch result is " + JSON.stringify(data.tags));
+            console.log("product creation result is " + JSON.stringify(data));
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+            toastr.error("The error from server for product create is --- " + jqXHR.responseJSON.message);
+        }
+    });
 }

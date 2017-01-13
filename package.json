@@ -25,7 +25,8 @@
     "passport-local": "^1.0.0",
     "squel": "latest",
     "nodemailer": "latest",
-    "nodemailer-sendgrid-transport": "latest"
+    "nodemailer-sendgrid-transport": "latest",
+    "multer": "1.2.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
