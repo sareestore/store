@@ -20,6 +20,7 @@ enableImageRead = function () {
         filesInput.addEventListener("change", function (event) {
             var files = event.target.files; //FileList object
             var output = document.getElementById("product_images_preview");
+            output.innerHTML = "";
             for (var i = 0; i < files.length; i++) {
                 var file = files[i];
                 //Only pics
@@ -387,7 +388,20 @@ function createProduct() {
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(textStatus, errorThrown);
             toastr.error("The error from server for product create is --- " + jqXHR.responseJSON.message);
-            //todo clear all the form fields
         }
     });
+}
+
+
+function clearForm() {
+    $(document.getElementById("product_types")).val([]).trigger("chosen:updated");
+    $(document.getElementById("occasions")).val([]).trigger("chosen:updated");
+    document.getElementById("price").value = "";
+    $(document.getElementById("colors")).val([]).trigger("chosen:updated");
+    document.getElementById("size").value = "";
+    document.getElementById("description").value = "";
+    $(document.getElementById("tags")).val([]).trigger("chosen:updated");
+    document.getElementById("product_images").value = "";
+    var output = document.getElementById("product_images_preview");
+    output.innerHTML = "";
 }
