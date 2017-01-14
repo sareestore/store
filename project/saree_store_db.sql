@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 11, 2017 at 06:52 PM
+-- Generation Time: Jan 14, 2017 at 07:56 AM
 -- Server version: 5.7.9
 -- PHP Version: 5.6.16
 
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `occasions` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `occasion` (`occasion`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `occasions`
@@ -94,7 +94,10 @@ INSERT INTO `occasions` (`id`, `occasion`, `created_at`, `updated_at`) VALUES
   (3, 'party', '2017-01-11 16:05:37', '2017-01-11 16:05:37'),
   (4, 'traditional', '2017-01-11 16:05:37', '2017-01-11 16:05:37'),
   (5, 'function', '2017-01-11 16:44:42', '2017-01-11 16:44:42'),
-  (6, 'ethnic', '2017-01-11 23:49:26', '2017-01-11 23:49:26');
+  (6, 'ethnic', '2017-01-11 23:49:26', '2017-01-11 23:49:26'),
+  (7, 'funky', '2017-01-14 11:54:02', '2017-01-14 11:54:02'),
+  (8, 'school', '2017-01-14 11:56:02', '2017-01-14 11:56:02'),
+  (9, 'college', '2017-01-14 11:56:45', '2017-01-14 11:56:45');
 
 -- --------------------------------------------------------
 
@@ -133,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -148,8 +151,10 @@ CREATE TABLE IF NOT EXISTS `products_colors` (
   `colors_id` int(11) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `products_id` (`products_id`,`colors_id`),
+  KEY `colors_id` (`colors_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -161,11 +166,13 @@ DROP TABLE IF EXISTS `products_images`;
 CREATE TABLE IF NOT EXISTS `products_images` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `products_id` int(11) NOT NULL,
-  `images_id` int(11) NOT NULL,
+  `image_url` varchar(250) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `products_id` (`products_id`,`image_url`),
+  UNIQUE KEY `products_id_2` (`products_id`,`image_url`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -180,8 +187,10 @@ CREATE TABLE IF NOT EXISTS `products_occasions` (
   `occasions_id` int(11) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `products_id` (`products_id`,`occasions_id`),
+  KEY `occasions_id` (`occasions_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -196,8 +205,10 @@ CREATE TABLE IF NOT EXISTS `products_tags` (
   `tags_id` int(11) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `products_id` (`products_id`,`tags_id`),
+  KEY `tags_id` (`tags_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -212,8 +223,10 @@ CREATE TABLE IF NOT EXISTS `products_types` (
   `product_types_id` int(11) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `products_id` (`products_id`,`product_types_id`),
+  KEY `product_types_id` (`product_types_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -358,6 +371,40 @@ ADD CONSTRAINT `fk_email_change_requests_customers1` FOREIGN KEY (`customers_id`
 --
 ALTER TABLE `password_change_requests`
 ADD CONSTRAINT `fk_password_change_requests_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `products_colors`
+--
+ALTER TABLE `products_colors`
+ADD CONSTRAINT `products_colors_ibfk_1` FOREIGN KEY (`products_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `products_colors_ibfk_2` FOREIGN KEY (`colors_id`) REFERENCES `colors` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `products_images`
+--
+ALTER TABLE `products_images`
+ADD CONSTRAINT `products_images_ibfk_1` FOREIGN KEY (`products_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `products_occasions`
+--
+ALTER TABLE `products_occasions`
+ADD CONSTRAINT `products_occasions_ibfk_1` FOREIGN KEY (`products_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `products_occasions_ibfk_2` FOREIGN KEY (`occasions_id`) REFERENCES `occasions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `products_tags`
+--
+ALTER TABLE `products_tags`
+ADD CONSTRAINT `products_tags_ibfk_1` FOREIGN KEY (`products_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `products_tags_ibfk_2` FOREIGN KEY (`tags_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `products_types`
+--
+ALTER TABLE `products_types`
+ADD CONSTRAINT `products_types_ibfk_1` FOREIGN KEY (`products_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `products_types_ibfk_2` FOREIGN KEY (`product_types_id`) REFERENCES `product_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `users_verification`
