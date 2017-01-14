@@ -354,9 +354,12 @@ function createProduct() {
         document.getElementById("product_images").style.border = '1px solid #f00';
         warning_messages.push("There should be at least 1 image");
     }
+
     if (warning_messages.length > 0) {
         document.getElementById("message_crumb").innerHTML = "" + warning_messages.join("  |  ");
         return;
+    } else {
+        document.getElementById("message_crumb").innerHTML = "";
     }
     var data = new FormData(document.getElementById("product_form"));
 
@@ -368,21 +371,7 @@ function createProduct() {
         }
         imageFiles.push(file);
     }
-    /*
-     var data = {
-     product_type_ids: product_type_ids,
-     occasion_ids: occasion_ids,
-     price: price,
-     color_ids: color_ids,
-     size: size,
-     description: description,
-     tag_ids: tag_ids,
-     imageFiles: imageFiles
-     };
-     */
-
-    console.log(data);
-
+    //console.log("Form data is " + data);
 
     $.ajax({
         //fetch categories from sever
@@ -392,12 +381,13 @@ function createProduct() {
         contentType: false,
         processData: false,
         success: function (data) {
-            //toastr["info"]("Categories fetch result is " + JSON.stringify(data.tags));
-            console.log("product creation result is " + JSON.stringify(data));
+            toastr["success"]("Successfully created a product with id " + data.insertId);
+            //console.log("product creation result is " + JSON.stringify(data));
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(textStatus, errorThrown);
             toastr.error("The error from server for product create is --- " + jqXHR.responseJSON.message);
+            //todo clear all the form fields
         }
     });
 }

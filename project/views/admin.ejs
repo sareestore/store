@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <title>Home</title>
+    <title>Admin Upload</title>
     <link rel="stylesheet" type="text/css" href="libs/css/roboto.css">
     <link rel="stylesheet" type="text/css" href="libs/css/arrow-icons.css">
     <link rel="stylesheet" type="text/css" href="libs/css/toastr.min.css">
@@ -14,7 +14,7 @@
 
     <h2>New Product Upload</h2>
 
-    <form id="product_form" enctype="multipart/form-data" action="/api/products" method="post">
+    <form id="product_form" enctype="multipart/form-data" onsubmit="return false">
         <table>
             <tr>
                 <td><label for="product_types">Types</label></td>
@@ -76,10 +76,10 @@
             </tr>
 
         </table>
-
-        <p id="message_crumb" style="color: #d00;font-size: small"></p>
-        <button id="create_product_button" onclick="createProduct()">Submit</button>
     </form>
+    <p id="message_crumb" style="color: #d00;font-size: small"></p>
+    <button id="create_product_button" onclick="createProduct()">Submit</button>
+
     <div class="push"></div>
 </div>
 

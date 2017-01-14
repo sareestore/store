@@ -3,6 +3,7 @@ var router = express.Router();
 var Product = require('../models/product.js');
 var multer = require('multer');
 var path = require('path');
+var fs = require('fs');
 
 router.post('/', function (req, res, next) {
     if (req.user.username != "admin") {
@@ -28,19 +29,53 @@ router.post('/', function (req, res, next) {
         var color_ids = req.body.colors;
         var occasion_ids = req.body.occasions;
         var tag_ids = req.body.tags;
-        var product_types = req.body.product_type_ids;
+        var product_type_ids = req.body.product_types;
         var image_urls = [];
+        if (color_ids === undefined || color_ids == null) {
+            color_ids = []
+        }
+        if (color_ids.constructor != Array) {
+            color_ids = [color_ids];
+        }
+
+        if (occasion_ids === undefined || occasion_ids == null) {
+            occasion_ids = []
+        }
+        if (occasion_ids.constructor != Array) {
+            occasion_ids = [occasion_ids];
+        }
+
+        if (tag_ids === undefined || tag_ids == null) {
+            tag_ids = []
+        }
+        if (tag_ids.constructor != Array) {
+            tag_ids = [tag_ids];
+        }
+
+        if (product_type_ids === undefined || product_type_ids == null) {
+            product_type_ids = []
+        }
+        if (product_type_ids.constructor != Array) {
+            product_type_ids = [product_type_ids];
+        }
+
+        //todo check if all the files are of image type and delete all the non image files
+        //store the file names of the saved files
         for (var i = 0; i < req.files.length; i++) {
             image_urls.push(req.files[i].filename);
         }
-        // todo handle undefined or single or array of types, occasions, tags, colors
+
         var warning_messages = [];
 
         // there should be at least one product type
-        //todo
+        if (product_type_ids.length <= 0) {
+            warning_messages.push("There should be at least one product type");
+        }
 
         // there should be at least one image file
-        //todo
+        if (image_urls.length <= 0) {
+            warning_messages.push("There should be at least one image");
+        }
 
         // throw error if constraints are not satisfied
         if (warning_messages.length > 0) {
@@ -50,16 +85,17 @@ router.post('/', function (req, res, next) {
         if (err) {
             return next(err);
         }
-        // files uploaded successfully
-        res.json({'message': "testing the file upload..."});
-        /*
-         Product.create(description, price, size, color_ids, image_urls, occasion_ids, tag_ids, product_type_ids, function (err, insertId) {
-         if (err) {
-         return next(err);
-         }
-         res.json({'insertId': insertId});
-         });
-         */
+
+        Product.create(description, price, size, color_ids, image_urls, occasion_ids, tag_ids, product_type_ids, function (err, insertId) {
+            if (err) {
+                //delete all the files in the file system
+                image_urls.forEach(function (filename) {
+                    fs.unlink(path.normalize(__dirname + '/..') + '/assets/images/products/' + filename);
+                });
+                return next(err);
+            }
+            res.json({'insertId': insertId});
+        });
     });
 });
 
