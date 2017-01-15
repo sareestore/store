@@ -6,7 +6,7 @@ var path = require('path');
 var fs = require('fs');
 
 router.get('/', function (req, res, next) {
-
+    var sql = "SELECT products.id, products.size, products.description, products.price, products_colors.colors_id  FROM products LEFT OUTER JOIN products_colors ON products_colors.products_id = products.id;";
 });
 
 router.post('/', function (req, res, next) {
