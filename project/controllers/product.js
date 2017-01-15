@@ -6,7 +6,12 @@ var path = require('path');
 var fs = require('fs');
 
 router.get('/', function (req, res, next) {
-    var sql = "SELECT products.id, products.size, products.description, products.price, products_colors.colors_id  FROM products LEFT OUTER JOIN products_colors ON products_colors.products_id = products.id;";
+    Product.get(function (err, products) {
+        if (err) {
+            return next(err);
+        }
+        res.json({"products": products});
+    })
 });
 
 router.post('/', function (req, res, next) {
@@ -221,7 +226,7 @@ router.delete("/", function (req, res, next) {
         return next(new Error("user is not admin"));
     }
 
-    var id = req.body["id"];
+    var id = req.query.id;
     Product.delete(id, function (err, affectedRows) {
         if (err) {
             return next(err);
