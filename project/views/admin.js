@@ -405,3 +405,19 @@ function clearForm() {
     var output = document.getElementById("product_images_preview");
     output.innerHTML = "";
 }
+
+function clearNonDbImages() {
+    $.ajax({
+        // fetch categories from sever
+        url: base_url + "/api/products/deleteimages",
+        type: "GET",
+        success: function (data) {
+            toastr["success"](JSON.stringify(data));
+            //console.log("product creation result is " + JSON.stringify(data));
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+            toastr.error("Error --- " + jqXHR.responseJSON.message);
+        }
+    });
+}

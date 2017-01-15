@@ -55,12 +55,48 @@ exports.create = function (description, price, size, color_ids, image_urls, occa
     });
 };
 
-exports.update = function (id, type, done) {
-
+exports.update = function (id, description, price, size, color_ids, image_urls, occasion_ids, tag_ids, type_ids, done) {
+    var values = [id, description, price, size];
+    var sql = "START TRANSACTION READ WRITE;";
+    sql += "INSERT INTO products(id, description, price, size) VALUES (?,?,?) ON DUPLICATE KEY UPDATE description=VALUES(description),price=VALUES(price),size=VALUES(size);";
+    for (var i = 0; i < color_ids.length; i++) {
+        sql += "INSERT INTO products_colors(products_id, colors_id) VALUES (?,?) ON DUPLICATE KEY UPDATE colors_id=VALUES(colors_id);";
+        values.push(id, color_ids[i]);
+    }
+    for (var i = 0; i < image_urls.length; i++) {
+        sql += "INSERT INTO products_images(products_id, image_url) VALUES (?,?) ON DUPLICATE KEY UPDATE image_url=VALUES(image_url);";
+        values.push(id, image_urls[i]);
+    }
+    for (var i = 0; i < occasion_ids.length; i++) {
+        sql += "INSERT INTO products_occasions(products_id, occasions_id) VALUES (?,?) ON DUPLICATE KEY UPDATE occasions_id=VALUES(occasions_id);";
+        values.push(id, occasion_ids[i]);
+    }
+    for (var i = 0; i < tag_ids.length; i++) {
+        sql += "INSERT INTO products_tags(products_id, tags_id) VALUES (?,?) ON DUPLICATE KEY UPDATE tags_id=VALUES(tags_id);";
+        values.push(id, tag_ids[i]);
+    }
+    for (var i = 0; i < type_ids.length; i++) {
+        sql += "INSERT INTO products_types(products_id, product_types_id) VALUES (?,?) ON DUPLICATE KEY UPDATE product_types_id=VALUES(product_types_id);";
+        values.push(id, type_ids[i]);
+    }
+    sql += "COMMIT;";
+    db.get().query(sql, values, function (err, result) {
+        if (err) return done(err);
+        //console.log("result of product update is " + JSON.stringify(result));
+        done(null, result);
+    });
 };
 
 exports.delete = function (id, done) {
-
+    var values = [id];
+    var sql = "";
+    sql += "DELETE FROM products WHERE id = ?;";
+    //stub
+    db.get().query(sql, values, function (err, result) {
+        if (err) return done(err);
+        //console.log("result of product delete is " + JSON.stringify(result));
+        done(null, result.affectedRows);
+    });
 };
 
 exports.deleteNonDBImages = function (folderpath, done) {

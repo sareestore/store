@@ -16,17 +16,17 @@ router.get('/showusers', function (req, res, next) {
     });
 
 });
-
-router.get('/deleteimages', function (req, res, next) {
-    var path = require('path');
-    Product.deleteNonDBImages(path.normalize(__dirname + '/..') + '/assets/images/products', function (err) {
-        if (err) {
-            return next(err);
-        }
-        else {
-            res.json({"message": "removed all non db images"});
-        }
-    });
-});
-
+/*
+ router.get('/deleteimages', function (req, res, next) {
+ var path = require('path');
+ Product.deleteNonDBImages(path.normalize(__dirname + '/..') + '/assets/images/products', function (err) {
+ if (err) {
+ return next(err);
+ }
+ else {
+ res.json({"message": "removed all non db images"});
+ }
+ });
+ });
+ */
 module.exports = router;
