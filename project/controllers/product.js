@@ -5,6 +5,10 @@ var multer = require('multer');
 var path = require('path');
 var fs = require('fs');
 
+router.get('/', function (req, res, next) {
+
+});
+
 router.post('/', function (req, res, next) {
     if (req.user == null || req.user == undefined || req.user.username != "admin") {
         return next(new Error("user is not admin"));
