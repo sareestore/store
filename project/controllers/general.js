@@ -1,8 +1,11 @@
 var express = require('express');
 var router = express.Router();
+var async = require('async');
 var Email_Token = require('../models/email_token.js');
 var Password_token = require('../models/password_change_request.js');
 var User = require('../models/User_Mysql');
+var Product = require('../models/Product');
+var Product_type = require('../models/product_type');
 
 var nodemailer = require('nodemailer');
 var sgTransport = require('nodemailer-sendgrid-transport');
@@ -23,6 +26,35 @@ router.get('/home', function (req, res) {
 router.get('/admin', function (req, res) {
     //console.log((typeof req.user == 'undefined') ? "undefined" : req.user.username);
     res.render('admin', {user: req.user});
+});
+
+router.get('/shop', function (req, res) {
+    //console.log((typeof req.user == 'undefined') ? "undefined" : req.user.username);
+    async.waterfall([
+        function (callback) {
+            Product.get(function (err, products) {
+                if (err) {
+                    return callback(err);
+                }
+                callback(null, products);
+            });
+        },
+        function (productsIn, callback) {
+            // productsIn now equals products
+            Product_type.get(req.query.id, function (err, product_types) {
+                if (err) {
+                    return callback(err);
+                }
+                callback(null, productsIn, product_types);
+            });
+        }
+    ], function (err, productsIn, product_typesIn) {
+        // result now equals 'done'
+        if (err) {
+            return next(err);
+        }
+        res.render('shop', {user: req.user, products: productsIn, product_types: product_typesIn});
+    });
 });
 
 router.get('/frgtpass', function (req, res) {
