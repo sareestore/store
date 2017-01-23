@@ -66,20 +66,34 @@
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
-            <ul class="nav navbar-nav">
-                <li>
-                    <select>
-                        <option value="-1">All</option>
+            <ul class="nav navbar-nav" style="padding-left: 8px">
+                <li style="padding-top: 8px;padding-right: 8px">
+                    <select name="product_types" id="product_types" data-placeholder="Select Products..."
+                            class="chosen-select"
+                            multiple style="width:200px">
                         <% for(var i = 0; i < product_types.length; i++) { %>
                         <option value="<%= product_types[i]["id"] %>"><%= product_types[i]["type"] %></option>
                         <% } %>
                     </select>
                 </li>
-                <li>
-                    <a href="#">Services</a>
+                <li style="padding-top: 8px;padding-right: 8px">
+                    <select name="occasions" id="occasions" data-placeholder="Select Occasions..." class="chosen-select"
+                            multiple style="width:200px">
+                        <% for(var i = 0; i < occasions.length; i++) { %>
+                        <option value="<%= occasions[i]["id"] %>"><%= occasions[i]["occasion"] %></option>
+                        <% } %>
+                    </select>
+                </li>
+                <li style="padding-top: 8px;padding-right: 8px">
+                    <select name="colors" id="colors" data-placeholder="Select Colors..." class="chosen-select"
+                            multiple style="width:200px;">
+                        <% for(var i = 0; i < colors.length; i++) { %>
+                        <option value="<%= colors[i]["id"] %>"><%= colors[i]["color"] %></option>
+                        <% } %>
+                    </select>
                 </li>
                 <li>
-                    <a href="#">Contact</a>
+                    <button onclick="clearFilters()" class="navbar-btn">Clear Filters</button>
                 </li>
             </ul>
         </div>
@@ -126,5 +140,8 @@
 <script src="libs/js/jquery.min.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="libs/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="libs/js/chosen.min.css">
+<script src="libs/js/chosen.jquery.min.js"></script>
+<script src="shop.js"></script>
 </body>
 </html>

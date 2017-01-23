@@ -6,6 +6,8 @@ var Password_token = require('../models/password_change_request.js');
 var User = require('../models/User_Mysql');
 var Product = require('../models/Product');
 var Product_type = require('../models/product_type');
+var Occasion = require('../models/occasion');
+var Color = require('../models/color');
 
 var nodemailer = require('nodemailer');
 var sgTransport = require('nodemailer-sendgrid-transport');
@@ -47,13 +49,36 @@ router.get('/shop', function (req, res) {
                 }
                 callback(null, productsIn, product_types);
             });
+        },
+        function (productsIn, product_typesIn, callback) {
+            Occasion.get(null, function (err, occasions) {
+                if (err) {
+                    return callback(err);
+                }
+                callback(null, productsIn, product_typesIn, occasions);
+            });
+        },
+        //stub
+        function (productsIn, product_typesIn, occasionsIn, callback) {
+            Color.get(null, function (err, colors) {
+                if (err) {
+                    return callback(err);
+                }
+                callback(null, productsIn, product_typesIn, occasionsIn, colors);
+            });
         }
-    ], function (err, productsIn, product_typesIn) {
+    ], function (err, productsIn, product_typesIn, occasionsIn, colorsIn) {
         // result now equals 'done'
         if (err) {
             return next(err);
         }
-        res.render('shop', {user: req.user, products: productsIn, product_types: product_typesIn});
+        res.render('shop', {
+            user: req.user,
+            products: productsIn,
+            product_types: product_typesIn,
+            occasions: occasionsIn,
+            colors: colorsIn
+        });
     });
 });
 
