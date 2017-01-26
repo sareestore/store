@@ -30,11 +30,30 @@ router.get('/admin', function (req, res) {
     res.render('admin', {user: req.user});
 });
 
-router.get('/shop', function (req, res) {
+router.get('/shop', function (req, res, next) {
     //console.log((typeof req.user == 'undefined') ? "undefined" : req.user.username);
+    var occasions = req.query.occasions;
+    if (typeof occasions == "undefined") {
+        occasions = [];
+    } else if (!(occasions.constructor === Array)) {
+        occasions = [occasions];
+    }
+    var colors = req.query.colors;
+    if (typeof colors == "undefined") {
+        colors = [];
+    } else if (!(colors.constructor === Array)) {
+        colors = [colors];
+    }
+    var product_types = req.query.product_types;
+    if (typeof product_types == "undefined") {
+        product_types = [];
+    } else if (!(product_types.constructor === Array)) {
+        product_types = [product_types];
+    }
     async.waterfall([
         function (callback) {
-            Product.get(function (err, products) {
+            var filters = {occasions: occasions, colors: colors, product_types: product_types};
+            Product.get(filters, function (err, products) {
                 if (err) {
                     return callback(err);
                 }
