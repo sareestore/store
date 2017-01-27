@@ -20,11 +20,12 @@ exports.get = function (filtersObject, done) {
         }
     }
     var sql = "SELECT products.id, products.size, products.description, products.price, " +
-        "GROUP_CONCAT(DISTINCT products_colors.colors_id SEPARATOR ', ') AS color_ids, " +
-        "GROUP_CONCAT(DISTINCT products_images.image_url SEPARATOR ', ') AS image_urls, " +
-        "GROUP_CONCAT(DISTINCT products_occasions.occasions_id SEPARATOR ', ') AS occasions_ids, " +
-        "GROUP_CONCAT(DISTINCT products_tags.tags_id SEPARATOR ', ') AS tags_ids, " +
-        "GROUP_CONCAT(DISTINCT products_types.product_types_id SEPARATOR ', ') AS product_types_ids " +
+        "GROUP_CONCAT(DISTINCT products_colors.colors_id SEPARATOR ',') AS color_ids, " +
+        "GROUP_CONCAT(DISTINCT products_images.image_url SEPARATOR ',') AS image_urls, " +
+        "GROUP_CONCAT(products_images.is_default SEPARATOR ',') AS image_defaults, " +
+        "GROUP_CONCAT(DISTINCT products_occasions.occasions_id SEPARATOR ',') AS occasions_ids, " +
+        "GROUP_CONCAT(DISTINCT products_tags.tags_id SEPARATOR ',') AS tags_ids, " +
+        "GROUP_CONCAT(DISTINCT products_types.product_types_id SEPARATOR ',') AS product_types_ids " +
         "FROM products " +
         "LEFT OUTER JOIN products_colors ON products_colors.products_id = products.id " +
         "LEFT OUTER JOIN products_tags ON products_tags.products_id = products.id " +
