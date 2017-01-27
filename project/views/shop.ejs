@@ -72,7 +72,11 @@
                             class="chosen-select"
                             multiple style="width:200px">
                         <% for(var i = 0; i < product_types.length; i++) { %>
-                        <option value="<%= product_types[i]["id"] %>"><%= product_types[i]["type"] %></option>
+                        <option value="<%= product_types[i]["id"] %>"
+                                <% if(selected_product_types.indexOf("" + product_types[i]["id"]) != -1){ %>
+                                <%= " selected" %>
+                                <% } %>
+                                ><%= product_types[i]["type"] %></option>
                         <% } %>
                     </select>
                 </li>
@@ -80,7 +84,11 @@
                     <select name="occasions" id="occasions" data-placeholder="Select Occasions..." class="chosen-select"
                             multiple style="width:200px">
                         <% for(var i = 0; i < occasions.length; i++) { %>
-                        <option value="<%= occasions[i]["id"] %>"><%= occasions[i]["occasion"] %></option>
+                        <option value="<%= occasions[i]["id"] %>"
+                                <% if(selected_occasions.indexOf("" + occasions[i]["id"]) != -1){ %>
+                                <%= " selected" %>
+                                <% } %>
+                                ><%= occasions[i]["occasion"] %></option>
                         <% } %>
                     </select>
                 </li>
@@ -88,7 +96,11 @@
                     <select name="colors" id="colors" data-placeholder="Select Colors..." class="chosen-select"
                             multiple style="width:200px;">
                         <% for(var i = 0; i < colors.length; i++) { %>
-                        <option value="<%= colors[i]["id"] %>"><%= colors[i]["color"] %></option>
+                        <option value="<%= colors[i]["id"] %>"
+                                <% if(selected_colors.indexOf("" + colors[i]["id"]) != -1){ %>
+                                <%= " selected" %>
+                                <% } %>
+                                ><%= colors[i]["color"] %></option>
                         <% } %>
                     </select>
                 </li>

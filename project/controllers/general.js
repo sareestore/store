@@ -96,7 +96,10 @@ router.get('/shop', function (req, res, next) {
             products: productsIn,
             product_types: product_typesIn,
             occasions: occasionsIn,
-            colors: colorsIn
+            colors: colorsIn,
+            selected_colors: colors,
+            selected_occasions: occasions,
+            selected_product_types: product_types
         });
     });
 });
