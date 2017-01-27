@@ -83,7 +83,7 @@ exports.getByName = function (type, done) {
 
 };
 
-exports.create = function (description, price, size, color_ids, image_urls, occasion_ids, tag_ids, type_ids, done) {
+exports.create = function (description, price, size, color_ids, image_urls, selectedImageIndex, occasion_ids, tag_ids, type_ids, done) {
     var values = [description, price, size];
     var sql = "START TRANSACTION READ WRITE;";
     sql += "INSERT INTO products(description, price, size) VALUES (?,?,?);";
@@ -94,7 +94,11 @@ exports.create = function (description, price, size, color_ids, image_urls, occa
         values.push(color_ids[i]);
     }
     for (var i = 0; i < image_urls.length; i++) {
-        sql += "INSERT INTO products_images(products_id, image_url) VALUES (@insertid,?);";
+        if (i == selectedImageIndex) {
+            sql += "INSERT INTO products_images(products_id, image_url, is_default) VALUES (@insertid,?,1);";
+        } else {
+            sql += "INSERT INTO products_images(products_id, image_url) VALUES (@insertid,?);";
+        }
         values.push(image_urls[i]);
     }
     for (var i = 0; i < occasion_ids.length; i++) {

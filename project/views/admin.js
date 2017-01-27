@@ -21,19 +21,21 @@ enableImageRead = function () {
             var files = event.target.files; //FileList object
             var output = document.getElementById("product_images_preview");
             output.innerHTML = "";
-            for (var i = 0; i < files.length; i++) {
+            for (var i = files.length - 1; i >= 0; i--) {
                 var file = files[i];
                 //Only pics
                 if (!file.type.match('image'))
                     continue;
                 var picReader = new FileReader();
-                picReader.addEventListener("load", function (event) {
-                    var picFile = event.target;
-                    var div = document.createElement("div");
-                    div.innerHTML = "<img class='thumbnail' src='" + picFile.result + "'" +
-                        "title='" + picFile.name + "'/>";
-                    output.insertBefore(div, null);
-                });
+                picReader.addEventListener("load", (function (i) {
+                    return function (event) {
+                        var picFile = event.target;
+                        var div = document.createElement("div");
+                        div.innerHTML = "<input type='radio' style='height:100px' name='default_image_index' value=" + i + " checked><img class='thumbnail' src='" + picFile.result + "'" +
+                            "title='" + picFile.name + "'/>";
+                        output.insertBefore(div, output.firstChild);
+                    };
+                })(i));
                 //Read the image
                 picReader.readAsDataURL(file);
             }
@@ -344,6 +346,7 @@ function createProduct() {
     var tag_ids = $(document.getElementById("tags")).val();
     var imageFiles = [];
     var files = document.getElementById("product_images").files;
+
     var warning_messages = [];
     // there should be at least one product type
     if (product_type_ids == null || product_type_ids.length <= 0) {

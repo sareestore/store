@@ -39,6 +39,10 @@ router.post('/', function (req, res, next) {
         var occasion_ids = req.body.occasions;
         var tag_ids = req.body.tags;
         var product_type_ids = req.body.product_types;
+        var selectedImageIndex = req.body.default_image_index;
+        if (typeof selectedImageIndex == "undefined" || selectedImageIndex == null || selectedImageIndex < 0) {
+            selectedImageIndex = 0;
+        }
         var image_urls = [];
         if (color_ids === undefined || color_ids == null) {
             color_ids = []
@@ -95,7 +99,7 @@ router.post('/', function (req, res, next) {
             return next(err);
         }
 
-        Product.create(description, price, size, color_ids, image_urls, occasion_ids, tag_ids, product_type_ids, function (err, insertId) {
+        Product.create(description, price, size, color_ids, image_urls, selectedImageIndex, occasion_ids, tag_ids, product_type_ids, function (err, insertId) {
             if (err) {
                 //delete all the files in the file system
                 image_urls.forEach(function (filename) {

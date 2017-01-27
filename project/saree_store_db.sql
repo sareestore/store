@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 14, 2017 at 07:56 AM
+-- Generation Time: Jan 27, 2017 at 10:23 AM
 -- Server version: 5.7.9
 -- PHP Version: 5.6.16
 
@@ -136,7 +136,16 @@ CREATE TABLE IF NOT EXISTS `products` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `description`, `price`, `size`, `created_at`, `updated_at`) VALUES
+  (6, 'It is Awesome co''z its random', '500', '15', '2017-01-15 23:00:37', '2017-01-15 23:00:37'),
+  (7, 'afafdga', '4564', '156', '2017-01-15 23:01:48', '2017-01-15 23:01:48'),
+  (9, 'kjdhfgjahlg', '500', '', '2017-01-21 20:56:55', '2017-01-21 20:56:55');
 
 -- --------------------------------------------------------
 
@@ -154,7 +163,18 @@ CREATE TABLE IF NOT EXISTS `products_colors` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `products_id` (`products_id`,`colors_id`),
   KEY `colors_id` (`colors_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `products_colors`
+--
+
+INSERT INTO `products_colors` (`id`, `products_id`, `colors_id`, `created_at`, `updated_at`) VALUES
+  (13, 6, 3, '2017-01-15 23:00:37', '2017-01-15 23:00:37'),
+  (14, 6, 4, '2017-01-15 23:00:37', '2017-01-15 23:00:37'),
+  (15, 7, 2, '2017-01-15 23:01:48', '2017-01-15 23:01:48'),
+  (16, 7, 6, '2017-01-15 23:01:48', '2017-01-15 23:01:48'),
+  (20, 9, 3, '2017-01-21 20:56:55', '2017-01-21 20:56:55');
 
 -- --------------------------------------------------------
 
@@ -167,12 +187,27 @@ CREATE TABLE IF NOT EXISTS `products_images` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `products_id` int(11) NOT NULL,
   `image_url` varchar(250) NOT NULL,
+  `is_default` int(1) NOT NULL DEFAULT '0',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `products_id` (`products_id`,`image_url`),
   UNIQUE KEY `products_id_2` (`products_id`,`image_url`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `products_images`
+--
+
+INSERT INTO `products_images` (`id`, `products_id`, `image_url`, `is_default`, `created_at`, `updated_at`) VALUES
+  (25, 6, 'product_images-1484501437278', 0, '2017-01-15 23:00:37', '2017-01-15 23:00:37'),
+  (26, 6, 'product_images-1484501437294', 0, '2017-01-15 23:00:37', '2017-01-15 23:00:37'),
+  (27, 7, 'product_images-1484501508807', 0, '2017-01-15 23:01:48', '2017-01-15 23:01:48'),
+  (28, 7, 'product_images-1484501508825', 0, '2017-01-15 23:01:49', '2017-01-15 23:01:49'),
+  (29, 7, 'product_images-1484501508841', 0, '2017-01-15 23:01:49', '2017-01-15 23:01:49'),
+  (30, 7, 'product_images-1484501508844', 0, '2017-01-15 23:01:49', '2017-01-15 23:01:49'),
+  (40, 9, 'product_images-1485012415525', 0, '2017-01-21 20:56:55', '2017-01-21 20:56:55'),
+  (41, 9, 'product_images-1485012415527', 0, '2017-01-21 20:56:55', '2017-01-21 20:56:55');
 
 -- --------------------------------------------------------
 
@@ -190,7 +225,19 @@ CREATE TABLE IF NOT EXISTS `products_occasions` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `products_id` (`products_id`,`occasions_id`),
   KEY `occasions_id` (`occasions_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `products_occasions`
+--
+
+INSERT INTO `products_occasions` (`id`, `products_id`, `occasions_id`, `created_at`, `updated_at`) VALUES
+  (10, 6, 4, '2017-01-15 23:00:37', '2017-01-15 23:00:37'),
+  (11, 6, 5, '2017-01-15 23:00:37', '2017-01-15 23:00:37'),
+  (12, 7, 1, '2017-01-15 23:01:49', '2017-01-15 23:01:49'),
+  (13, 7, 6, '2017-01-15 23:01:49', '2017-01-15 23:01:49'),
+  (17, 9, 2, '2017-01-21 20:56:55', '2017-01-21 20:56:55'),
+  (18, 9, 5, '2017-01-21 20:56:55', '2017-01-21 20:56:55');
 
 -- --------------------------------------------------------
 
@@ -208,7 +255,16 @@ CREATE TABLE IF NOT EXISTS `products_tags` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `products_id` (`products_id`,`tags_id`),
   KEY `tags_id` (`tags_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `products_tags`
+--
+
+INSERT INTO `products_tags` (`id`, `products_id`, `tags_id`, `created_at`, `updated_at`) VALUES
+  (3, 6, 1, '2017-01-15 23:00:37', '2017-01-15 23:00:37'),
+  (4, 7, 1, '2017-01-15 23:01:49', '2017-01-15 23:01:49'),
+  (6, 9, 5, '2017-01-21 20:56:55', '2017-01-21 20:56:55');
 
 -- --------------------------------------------------------
 
@@ -226,7 +282,18 @@ CREATE TABLE IF NOT EXISTS `products_types` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `products_id` (`products_id`,`product_types_id`),
   KEY `product_types_id` (`product_types_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `products_types`
+--
+
+INSERT INTO `products_types` (`id`, `products_id`, `product_types_id`, `created_at`, `updated_at`) VALUES
+  (6, 6, 2, '2017-01-15 23:00:37', '2017-01-15 23:00:37'),
+  (7, 6, 4, '2017-01-15 23:00:37', '2017-01-15 23:00:37'),
+  (8, 7, 1, '2017-01-15 23:01:49', '2017-01-15 23:01:49'),
+  (9, 7, 6, '2017-01-15 23:01:49', '2017-01-15 23:01:49'),
+  (13, 9, 1, '2017-01-21 20:56:55', '2017-01-21 20:56:55');
 
 -- --------------------------------------------------------
 
@@ -257,7 +324,7 @@ CREATE TABLE IF NOT EXISTS `product_types` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `type` (`type`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `product_types`
@@ -285,14 +352,18 @@ CREATE TABLE IF NOT EXISTS `tags` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `tag` (`tag`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tags`
 --
 
 INSERT INTO `tags` (`id`, `tag`, `created_at`, `updated_at`) VALUES
-  (1, 'cool', '2017-01-11 17:19:53', '2017-01-11 17:19:53');
+  (1, 'cool', '2017-01-11 17:19:53', '2017-01-11 17:19:53'),
+  (2, 'floral', '2017-01-21 19:58:59', '2017-01-21 19:58:59'),
+  (3, 'geometrical', '2017-01-21 19:59:13', '2017-01-21 19:59:13'),
+  (4, 'checks', '2017-01-21 20:55:35', '2017-01-21 20:55:35'),
+  (5, 'geometric figures', '2017-01-21 20:55:49', '2017-01-21 20:55:49');
 
 -- --------------------------------------------------------
 
