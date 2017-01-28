@@ -104,6 +104,10 @@ router.get('/shop', function (req, res, next) {
     });
 });
 
+router.get('/item', function (req, res, next) {
+    res.render("item");
+});
+
 router.get('/frgtpass', function (req, res) {
     res.render('frgtpass');
 });
