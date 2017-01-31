@@ -66,7 +66,8 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-3 col-xs-12">
-            <div id="image-stage" style="height: 350px;background-image:url(http://ell.h-cdn.co/assets/15/37/2015-spring-new-dress-fashion-designed-short-dress-free-shipping-self-portrait-liliana-dress.jpg);background-size:contain;background-repeat: no-repeat;">
+            <div id="image-stage"
+                 style="height: 350px;background-image:url(http://ell.h-cdn.co/assets/15/37/2015-spring-new-dress-fashion-designed-short-dress-free-shipping-self-portrait-liliana-dress.jpg);background-size:contain;background-repeat: no-repeat;">
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -75,37 +76,43 @@
                             <div class="item active">
                                 <div class="col-xs-4">
                                     <img src="http://placehold.it/300/f44336/000000"
-                                         style="max-height: 100px;overflow: hidden;max-width: 100%" onclick="getHighlighted(this.src)">
+                                         style="max-height: 100px;overflow: hidden;max-width: 100%"
+                                         onclick="getHighlighted(this.src)">
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="col-xs-4">
                                     <img src="http://placehold.it/300/e91e63/000000"
-                                         style="max-height: 100px;overflow: hidden;max-width: 100%" onclick="getHighlighted(this.src)">
+                                         style="max-height: 100px;overflow: hidden;max-width: 100%"
+                                         onclick="getHighlighted(this.src)">
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="col-xs-4">
                                     <img src="http://placehold.it/300/9c27b0/000000"
-                                         style="max-height: 100px;overflow: hidden;max-width: 100%" onclick="getHighlighted(this.src)">
+                                         style="max-height: 100px;overflow: hidden;max-width: 100%"
+                                         onclick="getHighlighted(this.src)">
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="col-xs-4">
                                     <img src="http://placehold.it/300/673ab7/000000"
-                                         style="max-height: 100px;overflow: hidden;max-width: 100%" onclick="getHighlighted(this.src)">
+                                         style="max-height: 100px;overflow: hidden;max-width: 100%"
+                                         onclick="getHighlighted(this.src)">
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="col-xs-4">
                                     <img src="http://placehold.it/300/4caf50/000000"
-                                         style="max-height: 100px;overflow: hidden;max-width: 100%" onclick="getHighlighted(this.src)">
+                                         style="max-height: 100px;overflow: hidden;max-width: 100%"
+                                         onclick="getHighlighted(this.src)">
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="col-xs-4">
                                     <img src="http://placehold.it/300/8bc34a/000000"
-                                         style="max-height: 100px;overflow: hidden;max-width: 100%" onclick="getHighlighted(this.src)">
+                                         style="max-height: 100px;overflow: hidden;max-width: 100%"
+                                         onclick="getHighlighted(this.src)">
                                 </div>
                             </div>
                             <!-- add  more items here -->
@@ -114,7 +121,8 @@
                             <div class="item">
                                 <div class="col-xs-4">
                                     <img src="http://placehold.it/300/154a3a/000000"
-                                         style="max-height: 100px;overflow: hidden;max-width: 100%" onclick="getHighlighted(this.src)">
+                                         style="max-height: 100px;overflow: hidden;max-width: 100%"
+                                         onclick="getHighlighted(this.src)">
                                 </div>
                             </div>
 
@@ -124,13 +132,28 @@
                         <a class="right carousel-control" href="#theCarousel" data-slide="next"></a>
                     </div>
                 </div>
+
+                <div class="col-md-6 padding-adjust-right" style="padding-top: 2px">
+                    <button class="btn btn-success btn-block" style="height: 3em;font-size: 15px"><i class="fa fa-flash"
+                                                                                      style="padding-right: 8px"></i>Order
+                        Now
+                    </button>
+                </div>
+                <div class="col-md-6 padding-adjust-left" style="padding-top: 2px">
+                    <button class="btn btn-default btn-block" style="height: 3em;font-size: 15px"><i
+                                class="fa fa-shopping-cart"
+                                style="padding-right: 8px"></i>Add to
+                        Cart
+                    </button>
+                </div>
+
             </div>
         </div>
 
         <div class="caption-full col-lg-9 col-xs-12">
-            <h4><a href="#">Product Name</a>
+            <h4><a href="#"><%= product.name %></a>
             </h4>
-            <h4>$24.99</h4>
+            <h4><%= "\u20B9 " + product.price %></h4>
 
             <p>See more snippets like these online store reviews at <a target="_blank"
                                                                        href="http://bootsnipp.com">Bootsnipp -

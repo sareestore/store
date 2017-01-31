@@ -80,8 +80,13 @@ exports.getProductImages = function (done) {
     });
 };
 
-exports.getByName = function (type, done) {
-
+exports.getById = function (id, done) {
+    var sql = "SELECT * FROM products where id = ?";
+    db.get().query(sql, [id], function (err, rows) {
+        if (err) return done(err);
+        // console.log("result of product get by id is " + JSON.stringify(result));
+        done(null, rows);
+    });
 };
 
 exports.create = function (description, price, size, color_ids, image_urls, selectedImageIndex, occasion_ids, tag_ids, type_ids, done) {

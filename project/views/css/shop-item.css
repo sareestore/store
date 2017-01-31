@@ -56,3 +56,12 @@ footer {
         transform: none!important;
     }
 }
+
+@media (min-width: 480px) {
+    .padding-adjust-left{
+        padding-left: 2px;
+    }
+    .padding-adjust-right{
+        padding-right: 2px;
+    }
+}
