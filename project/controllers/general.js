@@ -8,6 +8,7 @@ var Product = require('../models/Product');
 var Product_type = require('../models/product_type');
 var Occasion = require('../models/occasion');
 var Color = require('../models/color');
+var Product_Tag = require('../models/tag');
 
 var nodemailer = require('nodemailer');
 var sgTransport = require('nodemailer-sendgrid-transport');
@@ -77,7 +78,6 @@ router.get('/shop', function (req, res, next) {
                 callback(null, productsIn, product_typesIn, occasions);
             });
         },
-        //stub
         function (productsIn, product_typesIn, occasionsIn, callback) {
             Color.get(null, function (err, colors) {
                 if (err) {
@@ -109,54 +109,19 @@ router.get('/item', function (req, res, next) {
     if (itemId == null) {
         return res.redirect('/shop');
     }
-    async.waterfall([
-        function (callback) {
-            Product.getById(itemId, function (err, products) {
-                if (err) {
-                    return callback(err);
-                } else if (products.length == 0) {
-                    return callback(new Error("No product with this id"));
-                }
-                callback(null, products[0]);
-            });
-        },
-        function (productsIn, callback) {
-            // productsIn now equals products
-            Product_type.get(req.query.id, function (err, product_types) {
-                if (err) {
-                    return callback(err);
-                }
-                callback(null, productsIn, product_types);
-            });
-        },
-        function (productsIn, product_typesIn, callback) {
-            Occasion.get(null, function (err, occasions) {
-                if (err) {
-                    return callback(err);
-                }
-                callback(null, productsIn, product_typesIn, occasions);
-            });
-        },
-        //stub
-        function (productsIn, product_typesIn, occasionsIn, callback) {
-            Color.get(null, function (err, colors) {
-                if (err) {
-                    return callback(err);
-                }
-                callback(null, productsIn, product_typesIn, occasionsIn, colors);
-            });
-        }
-    ], function (err, productsIn, product_typesIn, occasionsIn, colorsIn) {
-        // result now equals 'done'
+    Product.getById(itemId, function (err, products) {
         if (err) {
             return next(err);
+        } else if (products.length == 0) {
+            return next(new Error("No product with this id"));
+        }
+        var product = products[0];
+        product.image_urls = products[0].image_urls.split(',');
+        if (product.image_url == null) {
+            product.image_url = product.image_urls[0];
         }
         res.render('item', {
-            user: req.user,
-            product: productsIn,
-            product_types: product_typesIn,
-            occasions: occasionsIn,
-            colors: colorsIn
+            product: product
         });
     });
 });

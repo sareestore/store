@@ -67,66 +67,21 @@
     <div class="row">
         <div class="col-lg-3 col-xs-12">
             <div id="image-stage"
-                 style="height: 350px;background-image:url(http://ell.h-cdn.co/assets/15/37/2015-spring-new-dress-fashion-designed-short-dress-free-shipping-self-portrait-liliana-dress.jpg);background-size:contain;background-repeat: no-repeat;">
+                 style="height: 350px;background-image:url(http://localhost:3000/product-images/<%= product.image_url %>);background-size:contain;background-repeat: no-repeat;">
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="carousel slide multi-item-carousel" id="theCarousel">
                         <div class="carousel-inner">
-                            <div class="item active">
+                            <% for(var i = 0; i < product.image_urls.length; i++) { %>
+                            <div class="item<% if(product.image_urls[i] == product.image_url){ %> active<% } %>">
                                 <div class="col-xs-4">
-                                    <img src="http://placehold.it/300/f44336/000000"
+                                    <img src="http://localhost:3000/product-images/<%= product.image_urls[i] %>"
                                          style="max-height: 100px;overflow: hidden;max-width: 100%"
                                          onclick="getHighlighted(this.src)">
                                 </div>
                             </div>
-                            <div class="item">
-                                <div class="col-xs-4">
-                                    <img src="http://placehold.it/300/e91e63/000000"
-                                         style="max-height: 100px;overflow: hidden;max-width: 100%"
-                                         onclick="getHighlighted(this.src)">
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="col-xs-4">
-                                    <img src="http://placehold.it/300/9c27b0/000000"
-                                         style="max-height: 100px;overflow: hidden;max-width: 100%"
-                                         onclick="getHighlighted(this.src)">
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="col-xs-4">
-                                    <img src="http://placehold.it/300/673ab7/000000"
-                                         style="max-height: 100px;overflow: hidden;max-width: 100%"
-                                         onclick="getHighlighted(this.src)">
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="col-xs-4">
-                                    <img src="http://placehold.it/300/4caf50/000000"
-                                         style="max-height: 100px;overflow: hidden;max-width: 100%"
-                                         onclick="getHighlighted(this.src)">
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="col-xs-4">
-                                    <img src="http://placehold.it/300/8bc34a/000000"
-                                         style="max-height: 100px;overflow: hidden;max-width: 100%"
-                                         onclick="getHighlighted(this.src)">
-                                </div>
-                            </div>
-                            <!-- add  more items here -->
-                            <!-- Example item start:  -->
-
-                            <div class="item">
-                                <div class="col-xs-4">
-                                    <img src="http://placehold.it/300/154a3a/000000"
-                                         style="max-height: 100px;overflow: hidden;max-width: 100%"
-                                         onclick="getHighlighted(this.src)">
-                                </div>
-                            </div>
-
-                            <!--  Example item end -->
+                            <% } %>
                         </div>
                         <a class="left carousel-control" href="#theCarousel" data-slide="prev"></a>
                         <a class="right carousel-control" href="#theCarousel" data-slide="next"></a>
@@ -134,16 +89,16 @@
                 </div>
 
                 <div class="col-md-6 padding-adjust-right" style="padding-top: 2px">
-                    <button class="btn btn-success btn-block" style="height: 3em;font-size: 15px"><i class="fa fa-flash"
-                                                                                      style="padding-right: 8px"></i>Order
+                    <button class="btn btn-warning btn-block"
+                            style="background-color:#fb641b;height: 3em;font-size: 15px"><i class="fa fa-flash"
+                                                                                            style="padding-right: 8px"></i>Order
                         Now
                     </button>
                 </div>
                 <div class="col-md-6 padding-adjust-left" style="padding-top: 2px">
                     <button class="btn btn-default btn-block" style="height: 3em;font-size: 15px"><i
                                 class="fa fa-shopping-cart"
-                                style="padding-right: 8px"></i>Add to
-                        Cart
+                                style="padding-right: 8px"></i>Add to Cart
                     </button>
                 </div>
 
@@ -154,62 +109,42 @@
             <h4><a href="#"><%= product.name %></a>
             </h4>
             <h4><%= "\u20B9 " + product.price %></h4>
-
-            <p>See more snippets like these online store reviews at <a target="_blank"
-                                                                       href="http://bootsnipp.com">Bootsnipp -
-                    http://bootsnipp.com</a>.</p>
-
-            <p>Want to make these reviews work? Check out
-                <strong><a href="http://maxoffsky.com/code-blog/laravel-shop-tutorial-1-building-a-review-system/">this
-                        building a review system tutorial</a>
-                </strong>over at maxoffsky.com!</p>
-
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
-
-            <div style="margin-bottom: 16px">
-                <button class="btn btn-success"><i class="fa fa-flash" style="padding-right: 8px"></i>Order Now
-                </button>
-                <button class="btn btn-default"><i class="fa fa-shopping-cart" style="padding-right: 8px"></i>Add to
-                    Cart
-                </button>
-            </div>
-            <div class="ratings">
-                <p class="pull-right">3 reviews</p>
-
-                <p>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    4.0 stars
-                </p>
-            </div>
+            <table class="table">
+                <tr>
+                    <td style="width: 200px">Category</td>
+                    <td>
+                        <%= product.product_types %>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 200px">Occasions</td>
+                    <td>
+                        <%= product.occasions %>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 200px">Colors</td>
+                    <td>
+                        <%= product.colors %>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 200px">Tags</td>
+                    <td>
+                        <%= product.tags %>
+                    </td>
+                </tr>
+            </table>
         </div>
 
 
     </div>
 
-    <div class="form-group" style="margin-top: 16px">
-        <textarea class="form-control" rows="3" placeholder="Your Review..."></textarea>
-    </div>
-    <div class="text-right">
-        <a class="btn btn-success">Leave a Review</a>
-    </div>
     <hr>
 
     <div class="row">
         <div class="col-md-12">
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-            Anonymous
+            <span style="font-weight: bold ;">Anonymous</span>
             <span class="pull-right">10 days ago</span>
 
             <p>This product was great in terms of quality. I would definitely buy another!</p>
@@ -220,12 +155,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-            Anonymous
+            <span style="font-weight: bold ;">Anonymous</span>
             <span class="pull-right">12 days ago</span>
 
             <p>I've alredy ordered another one!</p>
@@ -236,16 +166,18 @@
 
     <div class="row">
         <div class="col-md-12">
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-            Anonymous
+            <span style="font-weight: bold ;">Anonymous</span>
             <span class="pull-right">15 days ago</span>
 
             <p>I've seen some better than this, but not at this price. I definitely recommend this item.</p>
         </div>
+    </div>
+    <hr>
+    <div class="form-group" style="margin-top: 16px">
+        <textarea class="form-control" rows="3" placeholder="Your Review..."></textarea>
+    </div>
+    <div class="text-right">
+        <a class="btn btn-success">Leave a Review</a>
     </div>
 </div>
 <!-- /.container -->

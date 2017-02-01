@@ -19,7 +19,7 @@ exports.get = function (filtersObject, done) {
             product_types = filtersObject.product_types;
         }
     }
-    var sql = "SELECT products.id, products.size, products.description, products.price, " +
+    var sql = "SELECT products.id, products.size, products.description, products.price, product_default_images.image_url, " +
         "GROUP_CONCAT(DISTINCT products_colors.colors_id SEPARATOR ',') AS color_ids, " +
         "GROUP_CONCAT(DISTINCT products_images.image_url SEPARATOR ',') AS image_urls, " +
         "GROUP_CONCAT(products_images.is_default SEPARATOR ',') AS image_defaults, " +
@@ -31,7 +31,8 @@ exports.get = function (filtersObject, done) {
         "LEFT OUTER JOIN products_tags ON products_tags.products_id = products.id " +
         "LEFT OUTER JOIN products_images ON products_images.products_id = products.id " +
         "LEFT OUTER JOIN products_occasions ON products_occasions.products_id = products.id " +
-        "LEFT OUTER JOIN products_types ON products_types.products_id = products.id";
+        "LEFT OUTER JOIN products_types ON products_types.products_id = products.id " +
+        "LEFT OUTER JOIN (SELECT products_images.image_url, products_images.products_id FROM products_images WHERE products_images.is_default = 1) AS product_default_images ON product_default_images.products_id = products.id";
     var existsClauses = [];
     var questionMarkStrings = [];
     if (colors.length > 0) {
@@ -81,7 +82,20 @@ exports.getProductImages = function (done) {
 };
 
 exports.getById = function (id, done) {
-    var sql = "SELECT * FROM products where id = ?";
+    var sql = "SELECT products.id, products.size, products.description, products.price, product_default_images.image_url, " +
+        "GROUP_CONCAT(DISTINCT products_colors1.color SEPARATOR ',') AS colors, " +
+        "GROUP_CONCAT(DISTINCT products_images.image_url SEPARATOR ',') AS image_urls, " +
+        "GROUP_CONCAT(DISTINCT products_occasions1.occasion SEPARATOR ',') AS occasions, " +
+        "GROUP_CONCAT(DISTINCT products_tags1.tag SEPARATOR ',') AS tags, " +
+        "GROUP_CONCAT(DISTINCT products_types1.type SEPARATOR ',') AS product_types " +
+        "FROM products " +
+        "LEFT OUTER JOIN (SELECT products_colors.*, colors.color FROM products_colors INNER JOIN colors ON products_colors.colors_id = colors.id) AS products_colors1 ON products_colors1.products_id = products.id " +
+        "LEFT OUTER JOIN (SELECT products_tags.*, tags.tag FROM products_tags INNER JOIN tags ON products_tags.tags_id = tags.id) AS products_tags1 ON products_tags1.products_id = products.id " +
+        "LEFT OUTER JOIN products_images ON products_images.products_id = products.id " +
+        "LEFT OUTER JOIN (SELECT products_occasions.*, occasions.occasion FROM products_occasions INNER JOIN occasions ON products_occasions.occasions_id = occasions.id) AS products_occasions1 ON products_occasions1.products_id = products.id " +
+        "LEFT OUTER JOIN (SELECT products_types.*, product_types.type FROM products_types INNER JOIN product_types ON products_types.product_types_id = product_types.id) AS products_types1 ON products_types1.products_id = products.id " +
+        "LEFT OUTER JOIN (SELECT products_images.image_url, products_images.products_id FROM products_images WHERE products_images.is_default = 1) AS product_default_images ON product_default_images.products_id = products.id";
+    sql += " WHERE products.id = ? GROUP BY products.id;";
     db.get().query(sql, [id], function (err, rows) {
         if (err) return done(err);
         // console.log("result of product get by id is " + JSON.stringify(result));
