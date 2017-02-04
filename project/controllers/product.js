@@ -128,10 +128,9 @@ router.put('/', function (req, res, next) {
     var upload = multer({storage: storage}).array('product_images', 100);
 
     upload(req, res, function (err) {
-        console.log("Request body of product update " + req.body);
-        //console.log(req.files);
-
-        var id = req.body.id;
+        console.log(req.body);
+        console.log(req.files);
+        var id = req.body.item_id;
         var description = req.body.description;
         var price = req.body.price;
         var size = req.body.size;
@@ -139,6 +138,10 @@ router.put('/', function (req, res, next) {
         var occasion_ids = req.body.occasions;
         var tag_ids = req.body.tags;
         var product_type_ids = req.body.product_types;
+        var selectedImageIndex = req.body.default_image_index;
+        if (typeof selectedImageIndex == "undefined" || selectedImageIndex == null || selectedImageIndex < 0) {
+            selectedImageIndex = 0;
+        }
         var image_urls = [];
         if (color_ids === undefined || color_ids == null) {
             color_ids = []
@@ -181,11 +184,6 @@ router.put('/', function (req, res, next) {
             warning_messages.push("There should be at least one product type");
         }
 
-        // there should be at least one image file
-        if (image_urls.length <= 0) {
-            warning_messages.push("There should be at least one image");
-        }
-
         // throw error if constraints are not satisfied
         if (warning_messages.length > 0) {
             return next(new Error(warning_messages.join("  |  ")));
@@ -195,7 +193,7 @@ router.put('/', function (req, res, next) {
             return next(err);
         }
 
-        Product.update(description, price, size, color_ids, image_urls, occasion_ids, tag_ids, product_type_ids, function (err, result) {
+        Product.update(id, description, price, size, color_ids, image_urls, selectedImageIndex, occasion_ids, tag_ids, product_type_ids, function (err, insertId) {
             if (err) {
                 //delete all the files in the file system
                 image_urls.forEach(function (filename) {
@@ -203,7 +201,7 @@ router.put('/', function (req, res, next) {
                 });
                 return next(err);
             }
-            res.json({'result': result});
+            res.json({'insertId': insertId});
         });
     });
 });

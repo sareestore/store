@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+<head>
+    <title>Admin Upload</title>
+    <link rel="stylesheet" type="text/css" href="libs/css/roboto.css">
+    <link rel="stylesheet" type="text/css" href="libs/css/arrow-icons.css">
+    <link rel="stylesheet" type="text/css" href="libs/css/toastr.min.css">
+    <link rel="stylesheet" type="text/css" href="./admin.css">
+</head>
+<body>
+<div class="wrapper">
+    <% include ./partials/header %>
+    <h1>Admin Item Update</h1>
+
+    <h2>New Product Upload</h2>
+
+    <form id="product_form" enctype="multipart/form-data" onsubmit="return false">
+        <table>
+            <tr style="display: none">
+                <td><label for="item_id">Item Id</label></td>
+                <td><input type="number" name="item_id" id="item_id" value="<%= product.id %>">
+                </td>
+            </tr>
+            <tr>
+                <td><label for="product_types">Types</label></td>
+                <td><select name="product_types" id="product_types" data-placeholder="Add product_types..."
+                            class="chosen-select"
+                            multiple style="width:200px">
+                        <% for(var i = 0; i < product_types.length; i++) { %>
+                        <option value="<%= product_types[i]["id"] %>"
+                                <% if(product.product_types.split(',').indexOf("" + product_types[i]["type"]) != -1){ %>
+                                <%= " selected" %>
+                                <% } %>
+                                ><%= product_types[i]["type"] %></option>
+                        <% } %>
+                    </select></td>
+                <td><input type="text" id="new_product_type">
+                    <button id="add_new_product_type_button" onclick="addNewProductType()">Add New Product Type</button>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="occasions">Occasions</label></td>
+                <td><select name="occasions" id="occasions" data-placeholder="Add Occasions..." class="chosen-select"
+                            multiple style="width:200px">
+                        <% for(var i = 0; i < occasions.length; i++) { %>
+                        <option value="<%= occasions[i]["id"] %>"
+                                <% if(product.occasions.split(',').indexOf("" + occasions[i]["occasion"]) != -1){ %>
+                                <%= " selected" %>
+                                <% } %>
+                                ><%= occasions[i]["occasion"] %></option>
+                        <% } %>
+                    </select></td>
+                <td><input type="text" id="new_occasion">
+                    <button id="add_new_occasion_button" onclick="addNewOccasion()">Add New Occasion</button>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="price">Price</label></td>
+                <td><input type="number" name="price" id="price" value="<%= product.price %>"></td>
+            </tr>
+            <tr>
+                <td><label for="colors">Colors</label></td>
+                <td><select name="colors" id="colors" data-placeholder="Add Colors..." class="chosen-select"
+                            multiple style="width:200px">
+                        <% for(var i = 0; i < colors.length; i++) { %>
+                        <option value="<%= colors[i]["id"] %>"
+                                <% if(product.colors.split(',').indexOf("" + colors[i]["color"]) != -1){ %>
+                                <%= " selected" %>
+                                <% } %>
+                                ><%= colors[i]["color"] %></option>
+                        <% } %>
+                    </select></td>
+                <td><input type="text" id="new_color">
+                    <button id="add_new_color_button" onclick="addNewColor()">Add New Color</button>
+                </td>
+            </tr>
+
+            <tr>
+                <td><label for="size">Size</label></td>
+                <td><input type="text" name="size" id="size" value="<%= product.size %>"></td>
+            </tr>
+
+            <tr>
+                <td><label for="description">Description</label></td>
+                <td><input type="text" name="description" id="description" value="<%= product.description %>"></td>
+            </tr>
+
+            <tr>
+                <td><label for="tags">Tags</label></td>
+                <td><select name="tags" id="tags" data-placeholder="Add Tags..." class="chosen-select"
+                            multiple style="width:200px">
+                        <% for(var i = 0; i < tags.length; i++) { %>
+                        <option value="<%= tags[i]["id"] %>"
+                                <% if(product.tags.split(',').indexOf("" + tags[i]["tag"]) != -1){ %>
+                                <%= " selected" %>
+                                <% } %>
+                                ><%= tags[i]["tag"] %></option>
+                        <% } %>
+                    </select></td>
+                <td><input type="text" id="new_tag">
+                    <button id="add_new_tag_button" onclick="addNewTag()">Add New Tag</button>
+                </td>
+            </tr>
+
+            <tr>
+                <td><label for="product_images">Existing Images</label></td>
+                <td>
+                    <article>
+                        <output id="product_existing_images_preview">
+                            <table>
+                                <tr>
+                                    <td>Default</td>
+                                    <td>Image</td>
+                                    <td>Delete?</td>
+                                </tr>
+                                <% for(var i = 0; i < product.image_urls.length; i++) { %>
+                                <tr>
+                                    <td style="border: none"><input type="radio" style="height:100px" name="default_image_index" <%if(product.image_url == product.image_urls[i]){%> checked<%}%>></td>
+                                    <td style="border: none"><img class="thumbnail"
+                                             src="<%= 'http://localhost:3000/product-images/' + product.image_urls[i] %>">
+                                    </td>
+                                    <td style="border: none"><input type="checkbox" style="height:100px" name="delete_image_index"></td>
+                                </tr>
+                                <% } %>
+                            </table>
+                        </output>
+                    </article>
+                </td>
+            </tr>
+
+            <tr>
+                <td><label for="product_images">New Images</label></td>
+                <td>
+                    <article>
+                        <input type="file" name="product_images" id="product_images" multiple><br>
+                        <output id="product_images_preview"></output>
+                    </article>
+                </td>
+            </tr>
+            <tr style="display: none">
+                <td><input type="text" name="default_image"></td>
+                <td><input type="text" name="new_default_image"></td>
+            </tr>
+
+        </table>
+    </form>
+    <p id="message_crumb" style="color: #d00;font-size: small"></p>
+    <button id="update_product_button" onclick="updateProduct()">Submit</button>
+    <br><br>
+    <button id="clear_form_button" onclick="clearForm()">Clear Form</button>
+    <br><br>
+    <button id="clear_non_db_images_button" onclick="clearNonDbImages()">clearNonDbImages</button>
+    <div class="push"></div>
+</div>
+
+<% include ./partials/footer %>
+<script src="libs/js/jquery.min.js"></script>
+<script src="libs/js/toastr.min.js"></script>
+<link rel="stylesheet" type="text/css" href="libs/js/chosen.min.css">
+<script src="libs/js/chosen.jquery.min.js"></script>
+<script src="edit_item.js"></script>
+</body>
+</html>

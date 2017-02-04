@@ -63,7 +63,7 @@ router.get('/shop', function (req, res, next) {
         },
         function (productsIn, callback) {
             // productsIn now equals products
-            Product_type.get(req.query.id, function (err, product_types) {
+            Product_type.get(null, function (err, product_types) {
                 if (err) {
                     return callback(err);
                 }
@@ -116,12 +116,90 @@ router.get('/item', function (req, res, next) {
             return next(new Error("No product with this id"));
         }
         var product = products[0];
-        product.image_urls = products[0].image_urls.split(',');
+        if (product.image_urls == null) {
+            product.image_urls = [];
+        } else {
+            product.image_urls = products[0].image_urls.split(',');
+        }
         if (product.image_url == null) {
             product.image_url = product.image_urls[0];
         }
         res.render('item', {
+            user: req.user,
             product: product
+        });
+    });
+});
+
+router.get('/edit_item', function (req, res, next) {
+    var itemId = req.query.id;
+    if (itemId == null || typeof req.user == "undefined" || req.user == null || req.user.username != "admin") {
+        return res.redirect('/shop');
+    }
+    async.waterfall([
+        function (callback) {
+            Product.getById(itemId, function (err, products) {
+                if (err) {
+                    return callback(err);
+                }
+                var product = products[0];
+                if (product.image_urls == null) {
+                    product.image_urls = [];
+                } else {
+                    product.image_urls = products[0].image_urls.split(',');
+                }
+                if (product.image_url == null) {
+                    product.image_url = product.image_urls[0];
+                }
+                callback(null, product);
+            });
+        },
+        function (productsIn, callback) {
+            // productsIn now equals products
+            Product_type.get(null, function (err, product_types) {
+                if (err) {
+                    return callback(err);
+                }
+                callback(null, productsIn, product_types);
+            });
+        },
+        function (productsIn, product_typesIn, callback) {
+            Occasion.get(null, function (err, occasions) {
+                if (err) {
+                    return callback(err);
+                }
+                callback(null, productsIn, product_typesIn, occasions);
+            });
+        },
+        function (productsIn, product_typesIn, occasionsIn, callback) {
+            Color.get(null, function (err, colors) {
+                if (err) {
+                    return callback(err);
+                }
+                callback(null, productsIn, product_typesIn, occasionsIn, colors);
+            });
+        },
+        function (productsIn, product_typesIn, occasionsIn, colorsIn, callback) {
+            Product_Tag.get(null, function (err, tags) {
+                if (err) {
+                    return callback(err);
+                }
+                callback(null, productsIn, product_typesIn, occasionsIn, colorsIn, tags);
+            });
+        }
+    ], function (err, productsIn, product_typesIn, occasionsIn, colorsIn, tagsIn) {
+        // result now equals 'done'
+        if (err) {
+            return next(err);
+        }
+        res.render('edit_item', {
+            //stub
+            user: req.user,
+            product: productsIn,
+            product_types: product_typesIn,
+            occasions: occasionsIn,
+            colors: colorsIn,
+            tags: tagsIn
         });
     });
 });
