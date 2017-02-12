@@ -55,8 +55,8 @@ app.use('/api/colors/', require('./project/controllers/color'));
 app.use('/api/occasions/', require('./project/controllers/occasion'));
 app.use('/api/products/', require('./project/controllers/product'));
 app.use('/api/tags/', require('./project/controllers/tag'));
+app.use('/api/orders/', require('./project/controllers/order'));
 app.use('/test/usertest', require('./project/controllers/testing'));
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -55,7 +55,7 @@ router.put('/*', isLoggedIn, function (req, res, next) {
 
 function isLoggedIn(req, res, next) {
     //console.log("reached isLoggedIn...");
-    if (req.url === '/forgot' || req.url == "/resetpassword") return next();
+    if (req.url === '/forgot' || req.url == "/resetpassword" || req.url == "/api/orders/") return next();
     if (req.isAuthenticated()) {
         return next();
     }

@@ -50,9 +50,6 @@
                     <a href="#">About</a>
                 </li>
                 <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
                     <a href="#">Contact</a>
                 </li>
             </ul>
@@ -67,7 +64,8 @@
     <% if (typeof user != "undefined" && user != null && user.username == "admin") { %>
     <div class="row">
         <div class="col-md-12">
-            <button onclick="window.location='./edit_item?id=<%= product.id %>'" class="btn btn-primary pull-right"><i class="fa fa-pencil" style="padding-right: 8px"></i>Edit Item
+            <button onclick="window.location='./edit_item?id=<%= product.id %>'" class="btn btn-primary pull-right"><i
+                        class="fa fa-pencil" style="padding-right: 8px"></i>Edit Item
             </button>
         </div>
     </div>
@@ -97,7 +95,8 @@
                 </div>
 
                 <div class="col-md-12" style="padding-top: 8px">
-                    <button class="btn btn-warning btn-block"
+                    <button class="btn btn-warning btn-block" data-toggle="modal" data-target="#exampleModal"
+                            data-whatever="@getbootstrap"
                             style="background-color:#fb641b;height: 3em;font-size: 15px"><i class="fa fa-flash"
                                                                                             style="padding-right: 8px"></i>Order
                         Now
@@ -192,6 +191,95 @@
     </div>
     <div class="text-right">
         <a class="btn btn-success">Leave a Review</a>
+    </div>
+    <br>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">New Order</h4>
+                </div>
+                <form onsubmit="return placeOrder()">
+                    <input type="text" id="users_id" style="display: none"
+                            <% if (user && user.id){ %>
+                            <%= 'value=' + user.id %>
+                            <% } %>
+                            >
+                    <input type="text" id="products_id" style="display: none"
+                            <% if (product && product.id){ %>
+                            <%= 'value=' + product.id %>
+                            <% } %>
+                            >
+
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="name" class="control-label">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name"
+                                   placeholder="Your Name"
+                                   maxlength="100"
+                                    <% if (user && user.username){ %>
+                                    <%= 'value=' + user.username %>
+                                    <% } %>
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity" class="control-label">Quantity:</label>
+                            <input class="form-control" type="number" id="quantity" name="phone"
+                                   placeholder="Quantity" min="1" max="100" value=1 required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" class="control-label">Phone:</label>
+                            <input class="form-control" type="text" id="phone" name="phone"
+                                   placeholder="Phone Number"
+                                    <% if (user && user.phone){ %>
+                                    <%= 'value=' + user.phone %>
+                                    <% } %>
+                                   maxlength="50" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="control-label">Email:</label>
+                            <input class="form-control" id="email" name="email" type="email" placeholder="Email"
+                                    <% if (user && user.emailid){ %>
+                                    <%= 'value=' + user.emailid %>
+                                    <% } %>
+                                   maxlength="150" required>
+                        </div>
+                        <div class="form-address">
+                            <label for="address" class="control-label">Address:</label>
+                            <textarea class="form-control" id="address" name="address" placeholder="Address"
+                                      maxlength="300" required><% if(user && user.address != null){ %><%= user.address %>
+                                <% } %></textarea>
+                        </div>
+                        <div class="form-message">
+                            <label for="message" class="control-label">Message:</label>
+                            <textarea class="form-control" id="message" name="message" placeholder="Any Message"
+                                      maxlength="300"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Send message</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="orderPlaceModal" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <i class="fa fa-check fa-2x" aria-hidden="true" style="margin-right: 8px"></i><h4
+                            style="display: inline-block">Your order has been recorded</h4>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 27, 2017 at 10:23 AM
+-- Generation Time: Feb 12, 2017 at 06:38 PM
 -- Server version: 5.7.9
 -- PHP Version: 5.6.16
 
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `colors` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `color` (`color`),
   UNIQUE KEY `color_2` (`color`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `colors`
@@ -48,7 +48,8 @@ INSERT INTO `colors` (`id`, `color`, `created_at`, `updated_at`) VALUES
   (4, 'white', '2017-01-11 16:04:07', '2017-01-11 16:04:07'),
   (5, 'black', '2017-01-11 17:06:58', '2017-01-11 17:06:58'),
   (6, 'pink', '2017-01-11 17:09:30', '2017-01-11 17:09:30'),
-  (7, 'orange', '2017-01-11 17:14:05', '2017-01-11 17:14:05');
+  (7, 'orange', '2017-01-11 17:14:05', '2017-01-11 17:14:05'),
+  (8, 'magenta', '2017-01-27 22:27:02', '2017-01-27 22:27:02');
 
 -- --------------------------------------------------------
 
@@ -102,6 +103,40 @@ INSERT INTO `occasions` (`id`, `occasion`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `orders`
+--
+
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE IF NOT EXISTS `orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `users_id` int(11) DEFAULT NULL,
+  `products_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL DEFAULT '1',
+  `name` varchar(100) NOT NULL,
+  `phone` varchar(50) NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `address` varchar(300) NOT NULL,
+  `message` varchar(300) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `users_id` (`users_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `users_id`, `products_id`, `quantity`, `name`, `phone`, `email`, `address`, `message`, `created_at`, `updated_at`) VALUES
+  (1, 31, 7, 1, 'admin', '9819679462', 'admin@asd.com', 'ghjghj;hhjgjhasg;hh-4511512.\n                                \n                            ', 'hjghj', '2017-02-12 23:38:05', '2017-02-12 23:38:05'),
+  (2, 31, 7, 1, 'admin', '9819679462', 'admin@asd.com', 'ghjghj;hhjgjhasg;hh-4511512.\n                                \n                            ', 'njkhkj', '2017-02-12 23:39:27', '2017-02-12 23:39:27'),
+  (3, NULL, 7, 1, 'sudhir', '9819679462', 'nagasudhirpulla@gmail.com', '                            ', '', '2017-02-12 23:40:50', '2017-02-12 23:40:50'),
+  (4, NULL, 7, 2, 'jh', '7846', 'hghh@jhgjhg', '                            ', '', '2017-02-12 23:41:54', '2017-02-12 23:41:54'),
+  (5, NULL, 7, 1, 'one', '9819679462', 'nagasudhirpulla@gmail.com', 'ffdghdgh', '', '2017-02-12 23:44:26', '2017-02-12 23:44:26');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `password_change_requests`
 --
 
@@ -136,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `products`
@@ -144,8 +179,9 @@ CREATE TABLE IF NOT EXISTS `products` (
 
 INSERT INTO `products` (`id`, `description`, `price`, `size`, `created_at`, `updated_at`) VALUES
   (6, 'It is Awesome co''z its random', '500', '15', '2017-01-15 23:00:37', '2017-01-15 23:00:37'),
-  (7, 'afafdga', '4564', '156', '2017-01-15 23:01:48', '2017-01-15 23:01:48'),
-  (9, 'kjdhfgjahlg', '500', '', '2017-01-21 20:56:55', '2017-01-21 20:56:55');
+  (7, 'afafdga', '4564', '156', '2017-02-04 14:41:32', '2017-02-04 14:41:32'),
+  (9, 'kjdhfgjahlg', '500', '', '2017-01-21 20:56:55', '2017-01-21 20:56:55'),
+  (13, 'hjhdgjh', '1500', '', '2017-01-27 22:28:10', '2017-01-27 22:28:10');
 
 -- --------------------------------------------------------
 
@@ -163,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `products_colors` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `products_id` (`products_id`,`colors_id`),
   KEY `colors_id` (`colors_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `products_colors`
@@ -172,9 +208,12 @@ CREATE TABLE IF NOT EXISTS `products_colors` (
 INSERT INTO `products_colors` (`id`, `products_id`, `colors_id`, `created_at`, `updated_at`) VALUES
   (13, 6, 3, '2017-01-15 23:00:37', '2017-01-15 23:00:37'),
   (14, 6, 4, '2017-01-15 23:00:37', '2017-01-15 23:00:37'),
-  (15, 7, 2, '2017-01-15 23:01:48', '2017-01-15 23:01:48'),
-  (16, 7, 6, '2017-01-15 23:01:48', '2017-01-15 23:01:48'),
-  (20, 9, 3, '2017-01-21 20:56:55', '2017-01-21 20:56:55');
+  (20, 9, 3, '2017-01-21 20:56:55', '2017-01-21 20:56:55'),
+  (23, 13, 4, '2017-01-27 22:28:10', '2017-01-27 22:28:10'),
+  (24, 13, 6, '2017-01-27 22:28:11', '2017-01-27 22:28:11'),
+  (25, 13, 8, '2017-01-27 22:28:11', '2017-01-27 22:28:11'),
+  (39, 7, 4, '2017-02-04 15:21:25', '2017-02-04 15:21:25'),
+  (40, 7, 6, '2017-02-04 15:21:25', '2017-02-04 15:21:25');
 
 -- --------------------------------------------------------
 
@@ -193,7 +232,7 @@ CREATE TABLE IF NOT EXISTS `products_images` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `products_id` (`products_id`,`image_url`),
   UNIQUE KEY `products_id_2` (`products_id`,`image_url`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `products_images`
@@ -202,12 +241,15 @@ CREATE TABLE IF NOT EXISTS `products_images` (
 INSERT INTO `products_images` (`id`, `products_id`, `image_url`, `is_default`, `created_at`, `updated_at`) VALUES
   (25, 6, 'product_images-1484501437278', 0, '2017-01-15 23:00:37', '2017-01-15 23:00:37'),
   (26, 6, 'product_images-1484501437294', 0, '2017-01-15 23:00:37', '2017-01-15 23:00:37'),
-  (27, 7, 'product_images-1484501508807', 0, '2017-01-15 23:01:48', '2017-01-15 23:01:48'),
-  (28, 7, 'product_images-1484501508825', 0, '2017-01-15 23:01:49', '2017-01-15 23:01:49'),
-  (29, 7, 'product_images-1484501508841', 0, '2017-01-15 23:01:49', '2017-01-15 23:01:49'),
-  (30, 7, 'product_images-1484501508844', 0, '2017-01-15 23:01:49', '2017-01-15 23:01:49'),
   (40, 9, 'product_images-1485012415525', 0, '2017-01-21 20:56:55', '2017-01-21 20:56:55'),
-  (41, 9, 'product_images-1485012415527', 0, '2017-01-21 20:56:55', '2017-01-21 20:56:55');
+  (41, 9, 'product_images-1485012415527', 0, '2017-01-21 20:56:55', '2017-01-21 20:56:55'),
+  (58, 13, 'product_images-1485536290661', 0, '2017-01-27 22:28:11', '2017-01-27 22:28:11'),
+  (59, 13, 'product_images-1485536290689', 1, '2017-01-27 22:28:11', '2017-01-27 22:28:11'),
+  (60, 13, 'product_images-1485536290703', 0, '2017-01-27 22:28:11', '2017-01-27 22:28:11'),
+  (61, 13, 'product_images-1485536290708', 0, '2017-01-27 22:28:11', '2017-01-27 22:28:11'),
+  (62, 13, 'product_images-1485536290712', 0, '2017-01-27 22:28:11', '2017-01-27 22:28:11'),
+  (63, 7, 'product_images-1486200976562', 1, '2017-02-04 15:06:16', '2017-02-04 15:06:16'),
+  (64, 7, 'product_images-1486200976569', 0, '2017-02-04 15:06:16', '2017-02-04 15:06:16');
 
 -- --------------------------------------------------------
 
@@ -225,7 +267,7 @@ CREATE TABLE IF NOT EXISTS `products_occasions` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `products_id` (`products_id`,`occasions_id`),
   KEY `occasions_id` (`occasions_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `products_occasions`
@@ -234,10 +276,12 @@ CREATE TABLE IF NOT EXISTS `products_occasions` (
 INSERT INTO `products_occasions` (`id`, `products_id`, `occasions_id`, `created_at`, `updated_at`) VALUES
   (10, 6, 4, '2017-01-15 23:00:37', '2017-01-15 23:00:37'),
   (11, 6, 5, '2017-01-15 23:00:37', '2017-01-15 23:00:37'),
-  (12, 7, 1, '2017-01-15 23:01:49', '2017-01-15 23:01:49'),
-  (13, 7, 6, '2017-01-15 23:01:49', '2017-01-15 23:01:49'),
   (17, 9, 2, '2017-01-21 20:56:55', '2017-01-21 20:56:55'),
-  (18, 9, 5, '2017-01-21 20:56:55', '2017-01-21 20:56:55');
+  (18, 9, 5, '2017-01-21 20:56:55', '2017-01-21 20:56:55'),
+  (22, 13, 4, '2017-01-27 22:28:11', '2017-01-27 22:28:11'),
+  (23, 13, 6, '2017-01-27 22:28:11', '2017-01-27 22:28:11'),
+  (37, 7, 2, '2017-02-04 15:21:25', '2017-02-04 15:21:25'),
+  (38, 7, 6, '2017-02-04 15:21:25', '2017-02-04 15:21:25');
 
 -- --------------------------------------------------------
 
@@ -255,7 +299,7 @@ CREATE TABLE IF NOT EXISTS `products_tags` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `products_id` (`products_id`,`tags_id`),
   KEY `tags_id` (`tags_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `products_tags`
@@ -263,8 +307,9 @@ CREATE TABLE IF NOT EXISTS `products_tags` (
 
 INSERT INTO `products_tags` (`id`, `products_id`, `tags_id`, `created_at`, `updated_at`) VALUES
   (3, 6, 1, '2017-01-15 23:00:37', '2017-01-15 23:00:37'),
-  (4, 7, 1, '2017-01-15 23:01:49', '2017-01-15 23:01:49'),
-  (6, 9, 5, '2017-01-21 20:56:55', '2017-01-21 20:56:55');
+  (6, 9, 5, '2017-01-21 20:56:55', '2017-01-21 20:56:55'),
+  (17, 7, 1, '2017-02-04 15:21:25', '2017-02-04 15:21:25'),
+  (18, 7, 4, '2017-02-04 15:21:25', '2017-02-04 15:21:25');
 
 -- --------------------------------------------------------
 
@@ -282,7 +327,7 @@ CREATE TABLE IF NOT EXISTS `products_types` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `products_id` (`products_id`,`product_types_id`),
   KEY `product_types_id` (`product_types_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `products_types`
@@ -291,9 +336,10 @@ CREATE TABLE IF NOT EXISTS `products_types` (
 INSERT INTO `products_types` (`id`, `products_id`, `product_types_id`, `created_at`, `updated_at`) VALUES
   (6, 6, 2, '2017-01-15 23:00:37', '2017-01-15 23:00:37'),
   (7, 6, 4, '2017-01-15 23:00:37', '2017-01-15 23:00:37'),
-  (8, 7, 1, '2017-01-15 23:01:49', '2017-01-15 23:01:49'),
-  (9, 7, 6, '2017-01-15 23:01:49', '2017-01-15 23:01:49'),
-  (13, 9, 1, '2017-01-21 20:56:55', '2017-01-21 20:56:55');
+  (13, 9, 1, '2017-01-21 20:56:55', '2017-01-21 20:56:55'),
+  (17, 13, 4, '2017-01-27 22:28:11', '2017-01-27 22:28:11'),
+  (31, 7, 3, '2017-02-04 15:21:25', '2017-02-04 15:21:25'),
+  (32, 7, 5, '2017-02-04 15:21:25', '2017-02-04 15:21:25');
 
 -- --------------------------------------------------------
 
@@ -324,7 +370,7 @@ CREATE TABLE IF NOT EXISTS `product_types` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `type` (`type`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `product_types`
@@ -398,7 +444,7 @@ INSERT INTO `users` (`id`, `username`, `emailid`, `password`, `fullname`, `phone
   (24, 'ghggj', 'nagasudhirpulla@gmail.co', 'gghgHGJHGH', 'NA', 'NA', 'NA', '2016-12-04 07:03:21', '2017-01-07 05:34:25', 0),
   (25, 'hgjh', 'ghgj@hjhjg.com', 'asdf', 'NA', 'NA', 'NA', '2017-01-07 07:04:40', '2017-01-07 07:04:40', 0),
   (30, 'ghgugj', 'nagasudhirpulla@gmail.com', 'asdf', 'NA', 'NA', 'NA', '2017-01-08 04:55:23', '2017-01-08 04:55:23', 0),
-  (31, 'admin', 'admin@asd.com', 'abc123', '', '', '', '2017-01-11 04:22:00', '2017-01-11 04:22:00', 0);
+  (31, 'admin', 'admin@asd.com', 'abc123', 'Nagasudhir', '9819679462', 'ghjghj;hhjgjhasg;hh-4511512.', '2017-01-11 04:22:00', '2017-02-12 16:53:54', 0);
 
 -- --------------------------------------------------------
 
@@ -436,6 +482,12 @@ INSERT INTO `users_verification` (`id`, `users_id`, `token`, `created_at`) VALUE
 --
 ALTER TABLE `email_change_requests`
 ADD CONSTRAINT `fk_email_change_requests_customers1` FOREIGN KEY (`customers_id`) REFERENCES `customers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `orders`
+--
+ALTER TABLE `orders`
+ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Constraints for table `password_change_requests`

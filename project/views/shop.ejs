@@ -39,9 +39,6 @@
                     <a href="#">About</a>
                 </li>
                 <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
                     <a href="#">Contact</a>
                 </li>
             </ul>
@@ -125,9 +122,8 @@
             <div class="row">
                 <% for(var i = 0; i < products.length; i++) { %>
                 <div class="col-xs-6 col-sm-3 col-lg-3 col-md-3">
-                    <div class="thumbnail">
-                        <div onclick="window.location='./item?id=<%= products[i].id %>'"
-                             style="background-image:url(http://localhost:3000/product-images/<% if(products[i]["image_url"] != null){ %><%=products[i]["image_url"]%><% }else if(products[i]["image_urls"] != null && products[i]["image_urls"] !== ''){ %><%=products[i]["image_urls"].split(',')[0]%><% } %>);background-size:contain;background-repeat: no-repeat;"
+                    <div class="thumbnail" onclick="window.location='./item?id=<%= products[i].id %>'">
+                        <div style="background-image:url(http://localhost:3000/product-images/<% if(products[i]["image_url"] != null){ %><%= products[i]["image_url"] %><%}else if(products[i]["image_urls"] != null && products[i]["image_urls"] !== ''){ %><%= products[i]["image_urls"].split(',')[0]%><%}%>);background-size:contain;background-repeat: no-repeat;"
                              class="thumbnail-img-div"></div>
                         <div class="caption">
                             <h4 style="float:right"><%= "\u20B9 " + products[i]["price"] %></h4>
