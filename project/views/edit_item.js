@@ -204,7 +204,13 @@ function updateProduct() {
     var tag_ids = $(document.getElementById("tags")).val();
     var imageFiles = [];
     var files = document.getElementById("product_images").files;
-
+    var deletionImageUrls = [];
+    var deleteCheckBoxes = document.getElementsByClassName("delete_image_index");
+    for (var i = 0; i < deleteCheckBoxes.length; i++) {
+        if (deleteCheckBoxes[i].checked) {
+            deletionImageUrls.push(deleteCheckBoxes[i].value);
+        }
+    }
     var warning_messages = [];
     // there should be at least one product type
     if (product_type_ids == null || product_type_ids.length <= 0) {
@@ -219,7 +225,7 @@ function updateProduct() {
         document.getElementById("message_crumb").innerHTML = "";
     }
     var data = new FormData(document.getElementById("product_form"));
-
+    data.append('deletionUrls', JSON.stringify({urls: deletionImageUrls}));
     for (var i = 0; i < files.length; i++) {
         var file = files[i];
         //Only pics

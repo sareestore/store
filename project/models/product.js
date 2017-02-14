@@ -141,7 +141,7 @@ exports.create = function (description, price, size, color_ids, image_urls, sele
     });
 };
 
-exports.update = function (id, description, price, size, color_ids, image_urls, selectedImageIndex, occasion_ids, tag_ids, type_ids, done) {
+exports.update = function (id, description, price, size, color_ids, image_urls, selectedImageIndex, deletion_urls, occasion_ids, tag_ids, type_ids, done) {
     var values = [id, description, price, size];
     debugger;
     var sql = "START TRANSACTION READ WRITE;";
@@ -152,13 +152,24 @@ exports.update = function (id, description, price, size, color_ids, image_urls, 
         sql += "INSERT INTO products_colors(products_id, colors_id) VALUES (@insertid,?);";
         values.push(color_ids[i]);
     }
+    if (typeof selectedImageIndex != "undefined" && selectedImageIndex != null) {
+        sql += "UPDATE products_images SET is_default=0 WHERE products_id = @insertid;";
+    }
     for (var i = 0; i < image_urls.length; i++) {
-        if (i == selectedImageIndex) {
+        if (!isNaN(selectedImageIndex) && i == selectedImageIndex) {
             sql += "INSERT INTO products_images(products_id, image_url, is_default) VALUES (@insertid,?,1);";
         } else {
             sql += "INSERT INTO products_images(products_id, image_url) VALUES (@insertid,?);";
         }
         values.push(image_urls[i]);
+    }
+    if (typeof selectedImageIndex != "undefined" && selectedImageIndex != null && isNaN(selectedImageIndex)) {
+        sql += "UPDATE products_images SET is_default=1 WHERE products_id = @insertid AND image_url=?;";
+        values.push(selectedImageIndex);
+    }
+    for (var i = 0; i < deletion_urls.length; i++) {
+        sql += "DELETE FROM products_images WHERE products_id = @insertid AND image_url = ?;";
+        values.push(deletion_urls[i]);
     }
     sql += "DELETE FROM products_occasions WHERE products_id = @insertid;";
     for (var i = 0; i < occasion_ids.length; i++) {

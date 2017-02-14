@@ -139,9 +139,12 @@ router.put('/', function (req, res, next) {
         var tag_ids = req.body.tags;
         var product_type_ids = req.body.product_types;
         var selectedImageIndex = req.body.default_image_index;
-        if (typeof selectedImageIndex == "undefined" || selectedImageIndex == null || selectedImageIndex < 0) {
+        var deletion_urls = JSON.parse(req.body.deletionUrls).urls;
+
+        if (typeof selectedImageIndex == "undefined" || selectedImageIndex == null) {
             selectedImageIndex = 0;
         }
+
         var image_urls = [];
         if (color_ids === undefined || color_ids == null) {
             color_ids = []
@@ -171,6 +174,7 @@ router.put('/', function (req, res, next) {
             product_type_ids = [product_type_ids];
         }
 
+
         //todo check if all the files are of image type and delete all the non image files
         //store the file names of the saved files
         for (var i = 0; i < req.files.length; i++) {
@@ -192,8 +196,8 @@ router.put('/', function (req, res, next) {
         if (err) {
             return next(err);
         }
-
-        Product.update(id, description, price, size, color_ids, image_urls, selectedImageIndex, occasion_ids, tag_ids, product_type_ids, function (err, insertId) {
+        console.log("deletion urls are " + deletion_urls);
+        Product.update(id, description, price, size, color_ids, image_urls, selectedImageIndex, deletion_urls, occasion_ids, tag_ids, product_type_ids, function (err, insertId) {
             if (err) {
                 //delete all the files in the file system
                 image_urls.forEach(function (filename) {

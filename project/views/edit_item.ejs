@@ -115,11 +115,11 @@
                                 </tr>
                                 <% for(var i = 0; i < product.image_urls.length; i++) { %>
                                 <tr>
-                                    <td style="border: none"><input type="radio" style="height:100px" name="default_image_index" <%if(product.image_url == product.image_urls[i]){%> checked<%}%>></td>
+                                    <td style="border: none"><input type="radio" style="height:100px" value="<%= product.image_urls[i]%>" name="default_image_index" <%if(product.image_url == product.image_urls[i]){%> checked<%}%>></td>
                                     <td style="border: none"><img class="thumbnail"
                                              src="<%= 'http://localhost:3000/product-images/' + product.image_urls[i] %>">
                                     </td>
-                                    <td style="border: none"><input type="checkbox" style="height:100px" name="delete_image_index"></td>
+                                    <td style="border: none"><input type="checkbox" value="<%= product.image_urls[i]%>" style="height:100px" class="delete_image_index"></td>
                                 </tr>
                                 <% } %>
                             </table>
@@ -137,11 +137,6 @@
                     </article>
                 </td>
             </tr>
-            <tr style="display: none">
-                <td><input type="text" name="default_image"></td>
-                <td><input type="text" name="new_default_image"></td>
-            </tr>
-
         </table>
     </form>
     <p id="message_crumb" style="color: #d00;font-size: small"></p>
