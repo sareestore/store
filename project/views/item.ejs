@@ -119,10 +119,14 @@
         </div>
 
         <div class="caption-full col-lg-9 col-xs-12">
-            <h4><a href="#"><%= product.name %></a>
-            </h4>
             <h4><%= "\u20B9 " + product.price %></h4>
             <table class="table">
+                <tr>
+                    <td style="width: 200px">Description</td>
+                    <td>
+                        <%= product.description %>
+                    </td>
+                </tr>
                 <tr>
                     <td style="width: 200px">Occasions</td>
                     <td>

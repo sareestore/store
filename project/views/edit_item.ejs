@@ -28,7 +28,7 @@
                             multiple style="width:200px">
                         <% for(var i = 0; i < product_types.length; i++) { %>
                         <option value="<%= product_types[i]["id"] %>"
-                                <% if(product.product_types.split(',').indexOf("" + product_types[i]["type"]) != -1){ %>
+                                <% if(product.product_types != null && product.product_types.split(',').indexOf("" + product_types[i]["type"]) != -1){ %>
                                 <%= " selected" %>
                                 <% } %>
                                 ><%= product_types[i]["type"] %></option>
@@ -44,7 +44,7 @@
                             multiple style="width:200px">
                         <% for(var i = 0; i < occasions.length; i++) { %>
                         <option value="<%= occasions[i]["id"] %>"
-                                <% if(product.occasions.split(',').indexOf("" + occasions[i]["occasion"]) != -1){ %>
+                                <% if(product.occasions != null && product.occasions.split(',').indexOf("" + occasions[i]["occasion"]) != -1){ %>
                                 <%= " selected" %>
                                 <% } %>
                                 ><%= occasions[i]["occasion"] %></option>
@@ -64,7 +64,7 @@
                             multiple style="width:200px">
                         <% for(var i = 0; i < colors.length; i++) { %>
                         <option value="<%= colors[i]["id"] %>"
-                                <% if(product.colors.split(',').indexOf("" + colors[i]["color"]) != -1){ %>
+                                <% if(product.colors != null && product.colors.split(',').indexOf("" + colors[i]["color"]) != -1){ %>
                                 <%= " selected" %>
                                 <% } %>
                                 ><%= colors[i]["color"] %></option>
@@ -91,7 +91,7 @@
                             multiple style="width:200px">
                         <% for(var i = 0; i < tags.length; i++) { %>
                         <option value="<%= tags[i]["id"] %>"
-                                <% if(product.tags.split(',').indexOf("" + tags[i]["tag"]) != -1){ %>
+                                <% if(product.tags != null && product.tags.split(',').indexOf("" + tags[i]["tag"]) != -1){ %>
                                 <%= " selected" %>
                                 <% } %>
                                 ><%= tags[i]["tag"] %></option>
@@ -145,6 +145,8 @@
     <button id="clear_form_button" onclick="clearForm()">Clear Form</button>
     <br><br>
     <button id="clear_non_db_images_button" onclick="clearNonDbImages()">clearNonDbImages</button>
+    <br><br><br>
+    <button id="delete-product-button" onclick="deleteProduct(<%= product.id%>)">Delete Product</button>
     <div class="push"></div>
 </div>
 

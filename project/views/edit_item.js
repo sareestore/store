@@ -283,3 +283,22 @@ function clearNonDbImages() {
         }
     });
 }
+
+function deleteProduct(product_id) {
+    if (!confirm("Are you sure to delete this product from the shop ???")) {
+        return;
+    }
+    $.ajax({
+        // fetch categories from sever
+        url: base_url + "/api/products?id=" + product_id,
+        type: "DELETE",
+        success: function (data) {
+            toastr["success"](JSON.stringify(data));
+            //console.log("product creation result is " + JSON.stringify(data));
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+            toastr.error("Error --- " + jqXHR.responseJSON.message);
+        }
+    });
+}
