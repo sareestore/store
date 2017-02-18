@@ -49,7 +49,7 @@ enableImageRead = function () {
 function populateTypes(element) {
     $.ajax({
         //fetch categories from sever
-        url: base_url + "/api/product_types/",
+        url: "./api/product_types/",
         type: "GET",
         dataType: "json",
         success: function (data) {
@@ -85,7 +85,7 @@ function fillProductTypesSelect(sel, options) {
 function populateOccasions(element) {
     $.ajax({
         //fetch categories from sever
-        url: base_url + "/api/occasions/",
+        url: "./api/occasions/",
         type: "GET",
         dataType: "json",
         success: function (data) {
@@ -121,7 +121,7 @@ function fillOccasionsSelect(sel, options) {
 function populateColors(element) {
     $.ajax({
         //fetch categories from sever
-        url: base_url + "/api/colors/",
+        url: "./api/colors/",
         type: "GET",
         dataType: "json",
         success: function (data) {
@@ -157,7 +157,7 @@ function fillColorsSelect(sel, options) {
 function populateTags(element) {
     $.ajax({
         //fetch categories from sever
-        url: base_url + "/api/tags/",
+        url: "./api/tags/",
         type: "GET",
         dataType: "json",
         success: function (data) {
@@ -198,7 +198,7 @@ function addNewProductType() {
     }
     $.ajax({
         //fetch categories from sever
-        url: base_url + "/api/product_types/",
+        url: "./api/product_types/",
         type: "POST",
         data: {"product_type": newType.trim()},
         dataType: "json",
@@ -228,7 +228,7 @@ function addNewOccasion() {
     }
     $.ajax({
         //fetch categories from sever
-        url: base_url + "/api/occasions/",
+        url: "./api/occasions/",
         type: "POST",
         data: {"occasion": new_occasion.trim()},
         dataType: "json",
@@ -258,7 +258,7 @@ function addNewColor() {
     }
     $.ajax({
         //fetch categories from sever
-        url: base_url + "/api/colors/",
+        url: "./api/colors/",
         type: "POST",
         data: {"color": new_color.trim()},
         dataType: "json",
@@ -288,7 +288,7 @@ function addNewTag() {
     }
     $.ajax({
         //fetch categories from sever
-        url: base_url + "/api/tags/",
+        url: "./api/tags/",
         type: "POST",
         data: {"tag": new_tag.trim()},
         dataType: "json",
@@ -379,7 +379,7 @@ function createProduct() {
 
     $.ajax({
         //fetch categories from sever
-        url: base_url + "/api/products/",
+        url: "./api/products/",
         type: "POST",
         data: data,
         contentType: false,
@@ -412,7 +412,7 @@ function clearForm() {
 function clearNonDbImages() {
     $.ajax({
         // fetch categories from sever
-        url: base_url + "/api/products/deleteimages",
+        url: "./api/products/deleteimages",
         type: "GET",
         success: function (data) {
             toastr["success"](JSON.stringify(data));

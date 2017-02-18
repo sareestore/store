@@ -45,7 +45,7 @@ function placeOrder() {
     data.message = document.getElementById("message").value;
     $.ajax({
         //fetch categories from sever
-        url: "http://localhost:3000/api/orders/",
+        url: "./api/orders/",
         type: "POST",
         data: data,
         dataType: "json",

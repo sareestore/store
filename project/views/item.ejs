@@ -73,7 +73,7 @@
     <div class="row">
         <div class="col-lg-3 col-xs-12">
             <div id="image-stage"
-                 style="height: 350px;background-image:url(http://localhost:3000/product-images/<%= product.image_url %>);background-size:contain;background-repeat: no-repeat;">
+                 style="height: 350px;background-image:url(./product-images/<%= product.image_url %>);background-size:contain;background-repeat: no-repeat;">
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -82,7 +82,7 @@
                             <% for(var i = 0; i < product.image_urls.length; i++) { %>
                             <div class="item<% if(product.image_urls[i] == product.image_url){ %> active<% } %>">
                                 <div class="col-xs-4">
-                                    <img src="http://localhost:3000/product-images/<%= product.image_urls[i] %>"
+                                    <img src="./product-images/<%= product.image_urls[i] %>"
                                          style="max-height: 100px;overflow: hidden;max-width: 100%"
                                          onclick="getHighlighted(this.src)">
                                 </div>

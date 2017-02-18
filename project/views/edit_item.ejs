@@ -117,7 +117,7 @@
                                 <tr>
                                     <td style="border: none"><input type="radio" style="height:100px" value="<%= product.image_urls[i]%>" name="default_image_index" <%if(product.image_url == product.image_urls[i]){%> checked<%}%>></td>
                                     <td style="border: none"><img class="thumbnail"
-                                             src="<%= 'http://localhost:3000/product-images/' + product.image_urls[i] %>">
+                                             src="<%= './product-images/' + product.image_urls[i] %>">
                                     </td>
                                     <td style="border: none"><input type="checkbox" value="<%= product.image_urls[i]%>" style="height:100px" class="delete_image_index"></td>
                                 </tr>
