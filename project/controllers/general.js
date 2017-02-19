@@ -14,7 +14,15 @@ var nodemailer = require('nodemailer');
 var sgTransport = require('nodemailer-sendgrid-transport');
 
 router.get('/', function (req, res) {
-    res.redirect('/home');
+    res.redirect('/shop');
+});
+
+router.get('/about', function (req, res) {
+    res.render('about');
+});
+
+router.get('/contact', function (req, res) {
+    res.render('contact');
 });
 
 router.get('/signupemailsent', function (req, res) {

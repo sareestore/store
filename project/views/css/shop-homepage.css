@@ -66,3 +66,15 @@ body {
 footer {
     margin: 50px 0;
 }
+
+@media (min-width: 768px) {
+    .search-label {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .search-label {
+        display: inline-block;
+    }
+}
